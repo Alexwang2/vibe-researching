@@ -1,0 +1,1916 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>社会学的 Vibe Researching</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-primary: #faf9f6;
+  --bg-sidebar: #f0eeea;
+  --bg-code: #2b2d30;
+  --text-primary: #1a1a1a;
+  --text-secondary: #555;
+  --text-sidebar: #444;
+  --text-sidebar-active: #1a1a1a;
+  --accent: #c0392b;
+  --accent-light: #e74c3c;
+  --border: #ddd;
+  --border-light: #e8e6e1;
+  --shadow: rgba(0,0,0,0.06);
+  --sidebar-width: 300px;
+  --content-max: 820px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: 24px; }
+
+body {
+  font-family: 'Noto Sans SC', -apple-system, sans-serif;
+  font-size: 16px;
+  line-height: 1.85;
+  color: var(--text-primary);
+  background: var(--bg-primary);
+}
+
+/* ---- SIDEBAR ---- */
+.sidebar {
+  position: fixed;
+  top: 0; left: 0;
+  width: var(--sidebar-width);
+  height: 100vh;
+  background: var(--bg-sidebar);
+  border-right: 1px solid var(--border-light);
+  overflow-y: auto;
+  padding: 32px 0 40px;
+  z-index: 100;
+  scrollbar-width: thin;
+  scrollbar-color: #ccc transparent;
+}
+.sidebar-title {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--accent);
+  padding: 0 20px 16px;
+  border-bottom: 1px solid var(--border-light);
+  margin-bottom: 12px;
+  letter-spacing: 0.5px;
+}
+.sidebar-nav a {
+  display: block;
+  text-decoration: none;
+  color: var(--text-sidebar);
+  font-size: 13px;
+  padding: 5px 20px;
+  border-left: 3px solid transparent;
+  transition: all 0.2s;
+  line-height: 1.5;
+}
+.sidebar-nav a:hover {
+  color: var(--text-sidebar-active);
+  background: rgba(0,0,0,0.03);
+  border-left-color: var(--accent-light);
+}
+.sidebar-nav a.active {
+  color: var(--accent);
+  font-weight: 500;
+  border-left-color: var(--accent);
+  background: rgba(192,57,43,0.04);
+}
+.toc-h1 { font-weight: 700; font-size: 14px; padding-top: 12px; padding-bottom: 8px; color: var(--text-primary); }
+.toc-h2 { font-weight: 600; font-size: 13.5px; padding-left: 20px; padding-top: 8px; color: var(--text-primary); }
+.toc-h3 { padding-left: 32px; }
+.toc-h4 { padding-left: 44px; font-size: 12.5px; color: #777; }
+
+/* ---- MAIN CONTENT ---- */
+.main {
+  margin-left: var(--sidebar-width);
+  padding: 48px 60px 120px;
+  max-width: calc(var(--content-max) + 120px);
+}
+
+/* ---- TYPOGRAPHY ---- */
+h1 {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 2.2em;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+  letter-spacing: -0.5px;
+  line-height: 1.3;
+}
+h1 + p { /* author line */
+  color: var(--text-secondary);
+  font-size: 14px;
+  margin-bottom: 36px;
+}
+
+h2 {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 1.6em;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-top: 64px;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--accent);
+  letter-spacing: -0.3px;
+}
+h3 {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 1.25em;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-top: 44px;
+  margin-bottom: 14px;
+}
+h4 {
+  font-size: 1.05em;
+  font-weight: 600;
+  color: #333;
+  margin-top: 32px;
+  margin-bottom: 10px;
+}
+h5 {
+  font-size: 1em;
+  font-weight: 600;
+  color: #444;
+  margin-top: 24px;
+  margin-bottom: 8px;
+}
+
+p { margin-bottom: 14px; }
+
+strong { font-weight: 600; }
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ---- LISTS ---- */
+ul, ol { margin: 8px 0 14px 24px; }
+li { margin-bottom: 6px; }
+li > ul, li > ol { margin-top: 4px; margin-bottom: 4px; }
+
+/* ---- BLOCKQUOTE ---- */
+blockquote {
+  margin: 16px 0;
+  padding: 14px 20px;
+  background: #fdf8f0;
+  border-left: 4px solid #e8a838;
+  border-radius: 0 6px 6px 0;
+  color: #5a4e3a;
+  font-size: 14.5px;
+}
+blockquote p { margin-bottom: 6px; }
+blockquote p:last-child { margin-bottom: 0; }
+blockquote strong { color: #8b6914; }
+
+/* ---- CODE ---- */
+code {
+  font-family: 'JetBrains Mono', 'Menlo', monospace;
+  font-size: 0.88em;
+  background: #f0eeea;
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: #c0392b;
+}
+pre {
+  margin: 16px 0;
+  border-radius: 8px;
+  overflow-x: auto;
+}
+pre code {
+  display: block;
+  background: var(--bg-code);
+  color: #d4d4d4;
+  padding: 20px 24px;
+  font-size: 13.5px;
+  line-height: 1.65;
+  border-radius: 8px;
+  -webkit-font-smoothing: antialiased;
+}
+.highlight pre { background: var(--bg-code); border-radius: 8px; }
+.highlight code { background: transparent; color: #d4d4d4; padding: 0; }
+
+/* ---- TABLE ---- */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  font-size: 14.5px;
+}
+thead th {
+  background: #f5f3ef;
+  font-weight: 600;
+  text-align: left;
+  padding: 10px 14px;
+  border-bottom: 2px solid var(--border);
+}
+tbody td {
+  padding: 9px 14px;
+  border-bottom: 1px solid var(--border-light);
+  vertical-align: top;
+}
+tbody tr:hover { background: rgba(0,0,0,0.015); }
+
+/* ---- HR ---- */
+hr {
+  border: none;
+  border-top: 1px solid var(--border-light);
+  margin: 48px 0;
+}
+
+/* ---- MOBILE ---- */
+.menu-toggle {
+  display: none;
+  position: fixed;
+  top: 12px; left: 12px;
+  z-index: 200;
+  background: var(--bg-sidebar);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 14px;
+  cursor: pointer;
+}
+@media (max-width: 900px) {
+  .sidebar { transform: translateX(-100%); transition: transform 0.3s; }
+  .sidebar.open { transform: translateX(0); box-shadow: 4px 0 20px rgba(0,0,0,0.15); }
+  .main { margin-left: 0; padding: 60px 24px 80px; }
+  .menu-toggle { display: block; }
+}
+
+/* ---- SCROLL PROGRESS ---- */
+.progress-bar {
+  position: fixed;
+  top: 0; left: 0;
+  width: 0%;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-light));
+  z-index: 999;
+  transition: width 0.1s;
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+<button class="menu-toggle" id="menuToggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰ 目录</button>
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-title">社会学的 Vibe Researching</div>
+  <nav class="sidebar-nav">
+  <a href="#vibe-researching" class="toc-h1">社会学的 vibe researching</a>
+  <a href="#1-claude-code" class="toc-h2">1 Claude Code 基础</a>
+  <a href="#11-claude-code" class="toc-h3">1.1 Claude Code 是什么</a>
+  <a href="#12-claude-code" class="toc-h3">1.2 为什么社会科学研究者最近才注意到 Claude Code 这类工具？</a>
+  <a href="#13" class="toc-h3">1.3 人机协作的三个阶段</a>
+  <a href="#14-ai-agentclaude-code" class="toc-h3">1.4 终端 AI Agent：Claude Code 与同类工具</a>
+  <a href="#2-claude-code" class="toc-h2">2 Claude Code 的安装与配置</a>
+  <a href="#21" class="toc-h3">2.1 基础概念：在开始之前你需要了解的事</a>
+  <a href="#210" class="toc-h4">2.1.0 第零步：网络环境</a>
+  <a href="#211-terminal" class="toc-h4">2.1.1 什么是终端（Terminal）</a>
+  <a href="#212-package-manager" class="toc-h4">2.1.2 什么是包管理器（Package Manager）</a>
+  <a href="#213-path" class="toc-h4">2.1.3 什么是环境变量与 PATH</a>
+  <a href="#214-api-key" class="toc-h4">2.1.4 什么是 API Key 及其计费逻辑</a>
+  <a href="#22" class="toc-h3">2.2 安装方法</a>
+  <a href="#221-macos" class="toc-h4">2.2.1 macOS</a>
+  <a href="#222-windows" class="toc-h4">2.2.2 Windows</a>
+  <a href="#223-linux" class="toc-h4">2.2.3 Linux</a>
+  <a href="#23" class="toc-h3">2.3 验证安装</a>
+  <a href="#24" class="toc-h3">2.4 首次登录与认证</a>
+  <a href="#25" class="toc-h3">2.5 首次使用：在项目文件夹中启动</a>
+  <a href="#26" class="toc-h3">2.6 常见问题</a>
+  <a href="#27-homebrewnodejs-npm" class="toc-h3">2.7 附录：Homebrew、Node.js 与 npm 的安装及镜像配置</a>
+  <a href="#271-homebrew-macos" class="toc-h4">2.7.1 Homebrew 安装（macOS）</a>
+  <a href="#272-nodejs-npm" class="toc-h4">2.7.2 Node.js 与 npm 安装</a>
+  <a href="#273" class="toc-h4">2.7.3 大陆用户镜像配置</a>
+  <a href="#3" class="toc-h2">3 研究工作流的设计与搭建</a>
+  <a href="#31-vs" class="toc-h3">3.1 前置知识：全局配置 vs 项目配置</a>
+  <a href="#311-agentsmd" class="toc-h4">3.1.1 关于 AGENTS.md</a>
+  <a href="#32" class="toc-h3">3.2 概念总览：四层配置体系</a>
+  <a href="#33-claudemd" class="toc-h3">3.3 第一层：CLAUDE.md — 项目宪法</a>
+  <a href="#331" class="toc-h4">3.3.1 它是什么</a>
+  <a href="#332" class="toc-h4">3.3.2 应该写什么</a>
+  <a href="#333" class="toc-h4">3.3.3 实操示例</a>
+  <a href="#334" class="toc-h4">3.3.4 使用要点</a>
+  <a href="#34-rules" class="toc-h3">3.4 第二层：Rules — 自动加载的领域知识</a>
+  <a href="#341" class="toc-h4">3.4.1 它是什么</a>
+  <a href="#342" class="toc-h4">3.4.2 两种规则类型</a>
+  <a href="#343" class="toc-h4">3.4.3 实操示例</a>
+  <a href="#344" class="toc-h4">3.4.4 使用要点</a>
+  <a href="#35-skills" class="toc-h3">3.5 第三层：Skills — 可复用的工作流</a>
+  <a href="#351" class="toc-h4">3.5.1 它是什么</a>
+  <a href="#352" class="toc-h4">3.5.2 文件结构</a>
+  <a href="#353-yaml-frontmatter" class="toc-h4">3.5.3 YAML Frontmatter 字段说明</a>
+  <a href="#354" class="toc-h4">3.5.4 实操示例</a>
+  <a href="#355-skill" class="toc-h4">3.5.5 进阶：Skill 中的动态上下文</a>
+  <a href="#356" class="toc-h4">3.5.6 使用要点</a>
+  <a href="#36-agents" class="toc-h3">3.6 第四层：Agents — 专业化审查员</a>
+  <a href="#361" class="toc-h4">3.6.1 它是什么</a>
+  <a href="#362" class="toc-h4">3.6.2 文件结构</a>
+  <a href="#363-yaml-frontmatter" class="toc-h4">3.6.3 YAML Frontmatter 字段说明</a>
+  <a href="#364-agent-skill" class="toc-h4">3.6.4 Agent 与 Skill 如何协作</a>
+  <a href="#365" class="toc-h4">3.6.5 实操示例</a>
+  <a href="#366-critic-fixer" class="toc-h4">3.6.6 进阶：对抗式审查模式（Critic-Fixer 循环）</a>
+  <a href="#367" class="toc-h4">3.6.7 使用要点</a>
+  <a href="#37-git-memorymd" class="toc-h3">3.7 项目管理实践：Git 版本控制与 MEMORY.md</a>
+  <a href="#371-git" class="toc-h4">3.7.1 为什么需要 Git</a>
+  <a href="#372-git" class="toc-h4">3.7.2 Git 基础操作：从零开始</a>
+  <a href="#373-memorymd" class="toc-h4">3.7.3 MEMORY.md：跨会话的经验记忆</a>
+  <a href="#4" class="toc-h2">4 完整工作流演示：一个研究项目的全过程（待补充）</a>
+</nav>
+
+</aside>
+
+<main class="main">
+<h1 id="vibe-researching">社会学的 vibe researching</h1>
+<p>作者：汪立坤  Email：wlk752@163.com</p>
+<p>如果你目前使用 AI 辅助研究的方式仍然是：打开 ChatGPT 的对话框，粘贴问题，等待回复，再手动把结果复制回自己的文档——那么你正在使用的是一种已经过时的交互范式。</p>
+<p>Chatbot 的交互逻辑本质上是<strong>你问我答</strong>，模型无法看到你的数据文件，无法运行分析脚本，无法直接修改你的论文草稿——研究者不得不充当翻译者，在对话框与工作环境之间反复搬运信息。当前，AI 应用正在经历从 Chatbot 到 Agent 的范式跃迁：新一代工具直接进入研究者的本地环境，自主地读写文件、执行代码、调用外部工具。在软件工程领域，这种以自然语言指挥 AI 工作的方式被称为 vibe coding；迁移到学术研究中，便是本文所讨论的 <strong>vibe researching</strong>。</p>
+<p>本文档介绍依靠 Claude Code 进行 vibe researching 的基本方法，主要包括基础概念与安装、基本用法、技能系统（Skill）以及完整的研究工作流搭建。</p>
+<p>[toc]</p>
+<h2 id="1-claude-code">1 Claude Code 基础</h2>
+<h3 id="11-claude-code">1.1 Claude Code 是什么</h3>
+<ol>
+<li>Claude Code 是由 Anthropic 开发的终端 AI Agent 工具。在技术层面，Claude Code 本质上是一个"智能体安全框架"（Agentic Harness），它将 Claude 系列具备深度推理能力的模型与文件系统、Shell 环境、Git 版本控制工作流以及外部 API 协议（如 MCP）无缝集成。</li>
+<li>通俗地讲，Claude Code 是一个运行在你电脑终端中的 AI 助手，你用自然语言告诉它要做什么，它就能直接在你的项目文件夹里帮你完成工作——读取你的数据文件、编写并运行分析脚本、整理文献笔记、修改论文草稿等等。</li>
+<li>这种设计对社会科学研究者的关键意义在于：Claude Code 能够将你的<strong>整个项目文件夹作为工作上下文</strong>。它能同时看到你的数据文件、文献笔记、分析脚本和写作草稿，然后在这些真实材料上直接工作，而非像对话式 AI 那样在一个脱离你项目的对话框中泛泛而谈。这意味着你的角色从"亲自执行每一个操作步骤"转变为"研究的指挥者和质量把关人"——你负责提出问题、做出判断、把控方向，而 Claude Code 负责执行具体的技术操作。</li>
+</ol>
+<h3 id="12-claude-code">1.2 为什么社会科学研究者最近才注意到 Claude Code 这类工具？</h3>
+<p>Claude Code 早在 2025 年便已发布，但直到 2026 年才逐渐进入社会科学研究者的视野。这一时间差并非偶然，而是由多重因素共同造成的。</p>
+<ol>
+<li>首先是<strong>技术门槛的隔离</strong>。Claude Code 运行在终端（命令行）中，安装过程涉及 Node.js 环境配置、命令行操作和 API 密钥管理。这些步骤对软件工程师而言是日常操作，但社会科学研究者的日常工具栈——Word、SPSS、NVivo、Zotero——几乎全部依赖图形化界面，<strong>打开终端</strong>本身就已超出多数人的经验范围。</li>
+<li>其次是<strong>信息传播的圈层隔离</strong>。Claude Code 最早的用户和传播者几乎全部来自软件开发社区，其发布渠道、教程和讨论集中于 GitHub、Hacker News 等开发者平台，这些平台与社会科学研究者的信息来源（学术会议、学科公众号、同行推荐）之间存在明显的信息壁垒。在 2025 年，社科领域讨论的主要话题仍停留在如何使用 ChatGPT 润色论文、如何借助 Kimi 阅读文献等层面。</li>
+<li>第三是<strong>命名带来的认知偏差</strong>。Claude Code中的Code一词本身就会劝退大量非编程背景的研究者——我又不写代码，这跟我有什么关系？然而，这类工具的能力远不止于编写代码；只是其早期的宣传定位确实以开发者为核心受众，非编程场景下的应用价值尚未被充分揭示。</li>
+</ol>
+<p>2026 年出现转折的催化因素包括：</p>
+<ol>
+<li>MCP（Model Context Protocol）协议的成熟使 Claude Code 得以连接 Zotero 等学术工具，降低了研究者对“这与我的工作流有何关联”的疑虑；</li>
+<li>一批跨界研究者开始撰写中文教程并分享实操案例；</li>
+<li>加之 vibe coding 概念的广泛传播，使非程序员群体开始意识到不会写代码也能使用这类工具。</li>
+</ol>
+<h3 id="13">1.3 人机协作的三个阶段</h3>
+<p>在介绍 Claude Code 之前，有必要先理解人与 AI 协作方式的演化脉络。理解这一背景，才能把握 Claude Code 这类工具的真正意义所在。</p>
+<ol>
+<li><strong>第一阶段：Prompt Engineering（提示词工程）</strong>：这是我们最熟悉的阶段。用户在 ChatGPT、Claude.ai、Kimi 等对话框中输入问题，模型返回一段文本，交互到此结束。这一阶段的核心技巧是"怎么问"——如何措辞才能获得更好的回答。其瓶颈在于，所有上下文都需要用户手动粘贴进对话框，模型的能力边界止于文本生成。用一个类比来说：这相当于通过电话咨询一位顾问，你说一句，对方答一句，但对方完全看不到你桌上的资料。</li>
+<li><strong>第二阶段：Context Engineering（上下文工程）</strong>：人们逐渐意识到，模型输出的质量不取决于一句提示词写得多巧妙，而取决于能否将正确的上下文提供给模型。于是出现了 RAG（检索增强生成）、系统提示词（System Prompt）的精细设计、长上下文窗口等技术。关注点从<strong>怎么问</strong>转向<strong>怎么让模型看到它需要看到的信息</strong>。MCP（Model Context Protocol）协议也属于这一阶段的产物——它解决的正是如何将 Zotero、数据库等外部工具中的信息接入模型上下文的问题。</li>
+<li><strong>第三阶段：Harness Engineering（智能体框架工程）</strong>：这是当前最新的阶段，也是 Claude Code 所处的位置。关注点不再只是给模型提供信息，而是设计一套完整的<strong>基础设施</strong>来约束和引导模型的自主行为——它能操作哪些工具、在什么条件下执行什么动作、如何处理错误、如何与版本控制系统交互、如何在多次会话之间保持记忆。</li>
+<li>用一个类比来理解这三个阶段的区别：Prompt Engineering 像是给一个临时工下达一条口头指令；Context Engineering 像是给这个临时工提供一份详细的背景资料包；而 Harness Engineering 像是设计了一整套组织制度——岗位职责、工作流程、审核机制、档案管理——然后让 AI 在这套制度中运行。例如，Emory 大学经济学教授 Pedro Sant'Anna 为 Claude Code 设计的学术工作流便是一个典型案例：他构建了五层配置体系（项目宪法、领域规则、技能模块、专业审查员、跨会话记忆），其中批评者只读不改、修复者不能自我批准的对抗式审查机制，本质上就是一种制度设计。</li>
+</ol>
+<p>本文档后续介绍的 Skill 系统和工作流搭建，正是属于第二和第三阶段的实践。理解这一点很重要：Claude Code 的价值不仅在于它是一个更强的 ChatGPT，而在于它提供了一个让研究者设计和实施 AI 治理结构的平台。</p>
+<h3 id="14-ai-agentclaude-code">1.4 终端 AI Agent：Claude Code 与同类工具</h3>
+<p>理解了三个阶段之后，我们可以更准确地定位 Claude Code 所属的工具类别——终端 AI Agent（Terminal-based AI Agent）。这类工具直接运行在用户电脑的终端（命令行）中，能够自主地读写文件、执行代码、调用外部工具、管理项目结构。如果说 ChatGPT 是通过电话提供咨询的顾问，终端 AI Agent 就是直接坐在你电脑前、能够亲手替你操作的助手。目前这一赛道的主要工具包括：</p>
+<table>
+<thead>
+<tr>
+<th>工具</th>
+<th>开发方</th>
+<th>底层模型</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Claude Code</strong></td>
+<td>Anthropic</td>
+<td>Claude</td>
+<td>支持 MCP 协议，可连接 Zotero 等研究工具，生态最为完整</td>
+</tr>
+<tr>
+<td><strong>Codex CLI</strong></td>
+<td>OpenAI</td>
+<td>GPT</td>
+<td>思路相近，但协议生态不同</td>
+</tr>
+<tr>
+<td><strong>Gemini CLI</strong></td>
+<td>Google</td>
+<td>Gemini</td>
+<td>Google 生态下的对应方案（垃圾）</td>
+</tr>
+</tbody>
+</table>
+<h2 id="2-claude-code">2 Claude Code 的安装与配置</h2>
+<p>本节面向从未使用过终端的研究者。如果你已经熟悉命令行操作，可以直接跳至安装方法部分。</p>
+<h3 id="21">2.1 基础概念：在开始之前你需要了解的事</h3>
+<h4 id="210">2.1.0 第零步：网络环境</h4>
+<p>Claude Code 的安装和使用全程需要访问 Anthropic 的海外服务器（claude.ai、api.anthropic.com 等）。对于中国大陆用户而言，这意味着你需要<strong>先解决稳定的国际网络访问环境</strong>，且确保终端（而非仅浏览器）的流量也经过该环境。这是一切后续操作的前提，请在开始安装前确认这一点。</p>
+<h4 id="211-terminal">2.1.1 什么是终端（Terminal）</h4>
+<p>终端，也叫命令行（Command Line）或控制台（Console），是你电脑上的另一种操作界面。你日常使用的是<strong>图形界面（GUI）</strong>——通过鼠标点击图标、拖拽文件来操作电脑。终端则是<strong>文本界面</strong>：你通过键入文字命令来告诉电脑做什么，电脑以文字形式返回结果。</p>
+<p>这听起来像是倒退回了上世纪，但终端的优势在于精确和可自动化。Claude Code 就运行在终端中——你在终端里输入自然语言指令，Claude Code 读取后直接在你的文件夹中执行操作。</p>
+<p><strong>如何打开终端：</strong></p>
+<p><strong>macOS：</strong></p>
+<ol>
+<li>按 <code>Cmd + Space</code> 打开聚焦搜索（Spotlight）</li>
+<li>输入 <code>Terminal</code>（或"终端"）</li>
+<li>按回车，终端窗口就会打开</li>
+<li>你会看到一个带有闪烁光标的黑色（或白色）窗口——这就是终端</li>
+</ol>
+<p><strong>Windows：</strong></p>
+<ol>
+<li>按 <code>Win</code> 键，输入 <code>PowerShell</code></li>
+<li>点击"Windows PowerShell"打开</li>
+<li>你会看到一个蓝色背景的文字窗口——这就是 PowerShell，Windows 上的终端</li>
+</ol>
+<blockquote>
+<p><strong>提示</strong>：在终端中，你输入一行命令后按回车（Enter）执行。如果不小心输入了错误的命令，通常可以按 <code>Ctrl + C</code> 中断。不用担心会搞坏电脑——Claude Code 在执行敏感操作前会征求你的确认。</p>
+</blockquote>
+<h4 id="212-package-manager">2.1.2 什么是包管理器（Package Manager）</h4>
+<p>在图形界面中，你安装软件的方式通常是：打开浏览器 → 搜索软件 → 下载安装包 → 双击安装。<strong>包管理器</strong>是终端世界的"应用商店"，它让你用一行命令就能安装、更新或卸载软件。</p>
+<p>你在安装 Claude Code 的过程中可能会遇到以下几个包管理器的名字：</p>
+<ul>
+<li><strong>Homebrew</strong>：macOS 上最流行的包管理器。如果你在 Mac 上使用终端，迟早会接触到它。</li>
+<li><strong>npm</strong>：Node.js 的包管理器。Claude Code 早期通过 npm 安装，目前已不再推荐这种方式，但你可能在旧教程中看到它。</li>
+<li><strong>WinGet</strong>：Windows 自带的包管理器。</li>
+</ul>
+<p><strong>好消息是：当前推荐的 Claude Code 安装方式（原生安装器）不依赖任何包管理器。</strong> 你只需要在终端中运行一行安装命令即可。包管理器是备选方案，初学者可以完全忽略。</p>
+<h4 id="213-path">2.1.3 什么是环境变量与 PATH</h4>
+<p>当你在终端中输入 <code>claude</code> 并按回车时，电脑需要知道"claude 这个程序在硬盘的哪个位置"。<strong>PATH</strong> 就是一个告诉电脑"去哪些文件夹里找程序"的列表。</p>
+<p>安装 Claude Code 时，安装器会自动把程序所在的路径添加到你的 PATH 中。你通常不需要手动操作。但有一个关键细节：<strong>PATH 的更新需要重新打开终端才能生效</strong>。这就是为什么几乎所有安装教程都会提醒你"安装后关闭终端，重新打开一个新的终端窗口"。如果安装后输入 <code>claude</code> 提示"命令未找到"，十有八九是因为没有重启终端。</p>
+<h4 id="214-api-key">2.1.4 什么是 API Key 及其计费逻辑</h4>
+<p>API Key（应用程序接口密钥）是一串由字母和数字组成的字符串，相当于你使用 Claude Code 的通行证。它的作用是让 Anthropic 的服务器识别这个请求来自谁，并据此计费。</p>
+<p>Claude Code 有两种付费模式：</p>
+<ol>
+<li><strong>订阅制（推荐初学者）：</strong> 购买 Claude Pro（$20/月）或 Claude Max（$100/月）计划后，直接用你的 Claude 账户登录即可使用 Claude Code，费用包含在月费中。这种方式最简单——不需要手动管理 API Key，登录即用。每 5 小时有使用额度上限，超出后需等待刷新。</li>
+<li><strong>按量付费（API 模式）：</strong> 在 Anthropic Console（console.anthropic.com）注册账户，充值后获取一个以 <code>sk-</code> 开头的 API Key。每次使用 Claude Code 时按实际消耗的 token（可理解为文字量）计费。这种方式适合偶尔使用、或需要精确控制成本的场景。</li>
+</ol>
+<blockquote>
+<p><strong>对社科研究者的建议</strong>：如果你刚开始尝试，直接购买 Claude Pro（$20/月）是最省心的方式。登录后就能用，不需要理解 token 计费这些技术细节。等你用熟了，再根据使用频率决定是否切换到 Max 或 API 模式。</p>
+</blockquote>
+<hr />
+<h3 id="22">2.2 安装方法</h3>
+<p>截至 2026 年，Anthropic 官方推荐使用<strong>原生安装器（Native Installer）</strong>。这是最简单的方式：无需预装任何依赖软件，安装后自动在后台更新。</p>
+<h4 id="221-macos">2.2.1 macOS</h4>
+<p>打开终端，复制以下命令，粘贴到终端中，按回车执行：</p>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://claude.ai/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
+</code></pre></div>
+
+<blockquote>
+<p>这行命令的含义是：使用 <code>curl</code> 工具从 Anthropic 的服务器下载安装脚本，然后用 <code>bash</code> 执行它。你不需要记住这些，复制粘贴即可。</p>
+</blockquote>
+<p>系统要求：macOS 13.0（Ventura）或更高版本。Apple Silicon（M1/M2/M3/M4）和 Intel 芯片均支持。</p>
+<h4 id="222-windows">2.2.2 Windows</h4>
+<p>Windows 上有两种方式：</p>
+<p><strong>方式一：原生安装（推荐）</strong></p>
+<ol>
+<li>
+<p>首先安装 <a href="https://gitforwindows.org/">Git for Windows</a>——这是一个图形化的安装包，下载后双击安装，全程点"Next"即可。Claude Code 在 Windows 上内部依赖 Git Bash 来执行命令，所以这一步不能跳过。</p>
+</li>
+<li>
+<p>安装完 Git 后，打开 <strong>PowerShell</strong>（按 <code>Win</code> 键，输入 <code>PowerShell</code>，点击打开），复制粘贴以下命令并回车：</p>
+</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="nb">irm </span><span class="n">https</span><span class="p">://</span><span class="n">claude</span><span class="p">.</span><span class="n">ai</span><span class="p">/</span><span class="n">install</span><span class="p">.</span><span class="n">ps1</span> <span class="p">|</span> <span class="nb">iex</span>
+</code></pre></div>
+
+<blockquote>
+<p>这行命令的含义：<code>irm</code>（Invoke-RestMethod）从 Anthropic 下载安装脚本，<code>iex</code>（Invoke-Expression）执行它。同样，复制粘贴即可。</p>
+</blockquote>
+<p>如果 PowerShell 提示"无法运行脚本"（执行策略限制），先运行以下命令解除限制，然后重新执行安装命令：</p>
+<div class="highlight"><pre><span></span><code><span class="nb">Set-ExecutionPolicy</span> <span class="n">-ExecutionPolicy</span> <span class="n">RemoteSigned</span> <span class="n">-Scope</span> <span class="n">CurrentUser</span>
+</code></pre></div>
+
+<p><strong>方式二：通过 WSL（Windows Subsystem for Linux）</strong></p>
+<p>WSL 会在你的 Windows 电脑上创建一个 Linux 虚拟环境。这种方式更接近 macOS/Linux 的使用体验，安全性也更好，但设置步骤稍多：</p>
+<ol>
+<li>以<strong>管理员身份</strong>打开 PowerShell（右键点击 PowerShell → "以管理员身份运行"）</li>
+<li>运行：</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="n">wsl</span> <span class="p">-</span><span class="n">-install</span> <span class="n">-d</span> <span class="n">Ubuntu</span>
+</code></pre></div>
+
+<ol>
+<li>按提示重启电脑</li>
+<li>重启后 Ubuntu 会自动打开，要求你创建用户名和密码（这是 Linux 环境的账户，与 Windows 登录密码无关）</li>
+<li>在 Ubuntu 终端中运行：</li>
+</ol>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://claude.ai/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
+</code></pre></div>
+
+<blockquote>
+<p><strong>macOS vs Windows 怎么选？</strong> 如果你同时有两台电脑，macOS 的安装体验明显更简单。如果只有 Windows，推荐方式一（原生安装），除非你之后打算深度使用 Linux 工具链，才需要考虑 WSL。</p>
+</blockquote>
+<h4 id="223-linux">2.2.3 Linux</h4>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://claude.ai/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
+</code></pre></div>
+
+<p>支持 Ubuntu 20.04+、Debian 10+ 等主流发行版。</p>
+<hr />
+<h3 id="23">2.3 验证安装</h3>
+<p>安装完成后，<strong>关闭当前终端窗口，重新打开一个新的终端</strong>（回顾一下：这是为了让 PATH 更新生效）。然后运行：</p>
+<div class="highlight"><pre><span></span><code>claude<span class="w"> </span>--version
+</code></pre></div>
+
+<p>如果看到类似 <code>2.x.x</code> 的版本号输出，说明安装成功。你还可以运行健康检查命令，它会自动诊断常见问题：</p>
+<div class="highlight"><pre><span></span><code>claude<span class="w"> </span>doctor
+</code></pre></div>
+
+<h3 id="24">2.4 首次登录与认证</h3>
+<p>在终端中运行：</p>
+<div class="highlight"><pre><span></span><code>claude
+</code></pre></div>
+
+<p>首次启动时，Claude Code 会自动打开你的默认浏览器，引导你登录 Anthropic 账户。按照页面提示完成登录后，返回终端，你会看到 Claude Code 的欢迎界面——认证就完成了。</p>
+<p>登录凭据保存在本地 <code>~/.claude/</code> 目录中，后续启动无需重复登录。</p>
+<h3 id="25">2.5 首次使用：在项目文件夹中启动</h3>
+<p>认证完成后，用终端<strong>进入你的研究项目文件夹</strong>，然后启动 Claude Code：</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>~/my-research-project
+claude
+</code></pre></div>
+
+<blockquote>
+<p><strong><code>cd</code> 是什么？</strong> <code>cd</code> 是 "change directory" 的缩写，意思是"切换到某个文件夹"。<code>~/</code> 代表你的用户主目录（macOS 上是 <code>/Users/你的用户名/</code>，Windows 上是 <code>C:\Users\你的用户名\</code>）。例如，如果你的项目在桌面上的 "thesis" 文件夹中，命令就是 <code>cd ~/Desktop/thesis</code>。</p>
+</blockquote>
+<p>此时 Claude Code 会自动扫描当前文件夹的内容作为工作上下文。你可以直接用自然语言告诉它你想做什么，例如：</p>
+<ul>
+<li>"帮我看一下 data 文件夹里有哪些数据文件"</li>
+<li>"读取 survey_data.csv，告诉我有多少个变量和观测值"</li>
+<li>"帮我写一个 R 脚本，对 income 变量做描述性统计"</li>
+</ul>
+<p>这就是 Claude Code 区别于对话式 AI 的核心体验：它直接工作在你的真实项目环境中，而不是一个脱离上下文的对话框。</p>
+<h3 id="26">2.6 常见问题</h3>
+<p><strong>Q：安装后输入 <code>claude</code> 提示"命令未找到"</strong>
+A：关闭终端窗口，打开一个全新的终端，再试一次。如果仍然不行，运行 <code>which claude</code>（macOS/Linux）或 <code>where claude</code>（Windows）检查程序是否在 PATH 中。</p>
+<p><strong>Q：Windows 上 Claude Code 找不到 Git Bash</strong>
+A：在配置文件中手动指定路径。用文本编辑器打开（或创建）<code>~/.claude/settings.json</code>，写入：</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;env&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;CLAUDE_CODE_GIT_BASH_PATH&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;C:\\Program Files\\Git\\bin\\bash.exe&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p><strong>Q：我应该选 Pro 还是 Max？</strong>
+A：从 Pro（$20/月）开始。如果你发现自己经常遇到使用额度耗尽需要等待的情况，再考虑升级到 Max。</p>
+<p><strong>Q：Claude Code 是否有桌面应用？</strong>
+A：有。如果你实在不想使用终端，Anthropic 提供了 Claude Code 的桌面应用（Desktop App），支持 macOS 和 Windows，可以在 claude.ai 下载。桌面应用提供图形化界面，功能与终端版本基本一致。但本文档后续介绍的进阶用法（如 Skill 系统、CLAUDE.md 配置）主要基于终端版本。</p>
+<h3 id="27-homebrewnodejs-npm">2.7 附录：Homebrew、Node.js 与 npm 的安装及镜像配置</h3>
+<p>虽然 Claude Code 本身的安装不依赖 Homebrew 或 Node.js，但在后续的研究工作中，你很可能会用到它们——比如安装 R 语言环境、Python 包管理工具、或其他命令行工具。这里统一介绍安装方法，建议在熟悉终端基本操作后再回来完成这一步。</p>
+<h4 id="271-homebrew-macos">2.7.1 Homebrew 安装（macOS）</h4>
+<p>Homebrew 是 macOS 上的包管理器（回顾前文：相当于终端里的"应用商店"）。安装前需要先安装 Apple 的命令行开发工具：</p>
+<p>bash</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># 第一步：安装 Xcode 命令行工具（弹出窗口后点击&quot;安装&quot;）</span>
+xcode-select<span class="w"> </span>--install
+</code></pre></div>
+
+<p>等待安装完成（通常 1-2 分钟），然后运行：</p>
+<p>bash</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># 第二步：安装 Homebrew</span>
+/bin/bash<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh<span class="k">)</span><span class="s2">&quot;</span>
+</code></pre></div>
+
+<p>安装过程中会要求输入你的 Mac 登录密码（输入时屏幕上不会显示任何字符，这是正常的安全机制，输完直接按回车）。</p>
+<p>安装完成后，终端会显示"Next steps"提示。<strong>如果你使用的是 Apple Silicon（M1/M2/M3/M4）Mac</strong>，需要执行提示中的命令将 Homebrew 添加到 PATH：</p>
+<p>bash</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Apple Silicon Mac 需要执行这两行（Intel Mac 可跳过）：</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;eval &quot;$(/opt/homebrew/bin/brew shellenv)&quot;&#39;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.zshrc
+<span class="nb">eval</span><span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>/opt/homebrew/bin/brew<span class="w"> </span>shellenv<span class="k">)</span><span class="s2">&quot;</span>
+</code></pre></div>
+
+<p>验证安装：</p>
+<p>bash</p>
+<div class="highlight"><pre><span></span><code>brew<span class="w"> </span>--version
+<span class="c1"># 应输出类似 Homebrew 4.x.x</span>
+</code></pre></div>
+
+<h4 id="272-nodejs-npm">2.7.2 Node.js 与 npm 安装</h4>
+<p>Node.js 是一个 JavaScript 运行环境，npm 是它自带的包管理器。Claude Code 早期通过 npm 安装（现已不推荐），但你在使用 MCP 协议连接外部工具时仍可能用到它。</p>
+<p><strong>macOS（通过 Homebrew）：</strong></p>
+<p>bash</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># 安装 Node.js（npm 会自动随之安装）</span>
+brew<span class="w"> </span>install<span class="w"> </span>node
+
+<span class="c1"># 验证</span>
+node<span class="w"> </span>--version<span class="w">   </span><span class="c1"># 应输出 v18 或更高</span>
+npm<span class="w"> </span>--version<span class="w">    </span><span class="c1"># 应输出 npm 的版本号</span>
+</code></pre></div>
+
+<p><strong>Windows：</strong></p>
+<p>访问 <a href="https://nodejs.org/">nodejs.org</a>，下载 <strong>LTS（长期支持）版本</strong> 的安装包，双击运行，全程点"Next"即可。安装完成后<strong>重新打开 PowerShell</strong>，运行：</p>
+<p>powershell</p>
+<div class="highlight"><pre><span></span><code><span class="n">node</span> <span class="p">-</span><span class="n">-version</span>
+<span class="n">npm</span> <span class="p">-</span><span class="n">-version</span>
+</code></pre></div>
+
+<p>如果都能输出版本号，说明安装成功。</p>
+<h4 id="273">2.7.3 大陆用户镜像配置</h4>
+<p>在前文"第零步"中我们提到，大陆用户需要先解决国际网络访问问题。除此之外，Homebrew 和 npm 的默认服务器位于海外，在大陆网络下速度极慢甚至无法连接。建议配置国内镜像源：</p>
+<p><strong>Homebrew 镜像（macOS）：</strong></p>
+<p>bash</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># 将以下三行添加到 shell 配置文件中（macOS 默认使用 zsh）：</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;export HOMEBREW_BREW_GIT_REMOTE=&quot;https://mirrors.ustc.edu.cn/brew.git&quot;&#39;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.zshrc
+<span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;export HOMEBREW_CORE_GIT_REMOTE=&quot;https://mirrors.ustc.edu.cn/homebrew-core.git&quot;&#39;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.zshrc
+<span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;export HOMEBREW_BOTTLE_DOMAIN=&quot;https://mirrors.ustc.edu.cn/homebrew-bottles&quot;&#39;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.zshrc
+
+<span class="c1"># 让配置立即生效：</span>
+<span class="nb">source</span><span class="w"> </span>~/.zshrc
+</code></pre></div>
+
+<blockquote>
+<p>上述命令的作用是告诉 Homebrew：不要去海外的默认服务器下载软件，改为去中国科学技术大学的镜像服务器下载，内容完全一致但速度快得多。</p>
+</blockquote>
+<p><strong>npm 镜像：</strong></p>
+<p>bash</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># 将 npm 的下载源切换为淘宝镜像：</span>
+npm<span class="w"> </span>config<span class="w"> </span><span class="nb">set</span><span class="w"> </span>registry<span class="w"> </span>https://registry.npmmirror.com
+
+<span class="c1"># 验证是否生效：</span>
+npm<span class="w"> </span>config<span class="w"> </span>get<span class="w"> </span>registry
+<span class="c1"># 应输出：https://registry.npmmirror.com</span>
+</code></pre></div>
+
+<blockquote>
+<p><strong>提示</strong>：如果你使用推荐的原生安装器安装 Claude Code 本身，上述镜像配置不是必需的——原生安装器直接从 claude.ai 下载，不经过 Homebrew 或 npm。但当你后续需要安装其他工具（如 Node.js 包、Python 依赖等）时，这些镜像会帮你节省大量时间。</p>
+</blockquote>
+<h2 id="3">3 研究工作流的设计与搭建</h2>
+<p>本节介绍如何通过配置文件系统地管理 Claude Code 的行为。这是本文档的核心内容——如果说安装 Claude Code 是雇了一个助手，那么本节要做的就是为这个助手设计一套完整的工作制度。</p>
+<h3 id="31-vs">3.1 前置知识：全局配置 vs 项目配置</h3>
+<p>在深入四层配置体系之前，你需要先理解一个基础概念：Claude Code 的所有配置文件都存在<strong>两个层级</strong>。</p>
+<table>
+<thead>
+<tr>
+<th>层级</th>
+<th>位置</th>
+<th>生效范围</th>
+<th>是否共享</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>全局（用户级）</strong></td>
+<td><code>~/.claude/</code></td>
+<td>你所有项目共享</td>
+<td>否，仅限你个人</td>
+</tr>
+<tr>
+<td><strong>项目级</strong></td>
+<td><code>你的项目/.claude/</code></td>
+<td>仅对当前项目生效</td>
+<td>是，可通过 Git 分享给协作者</td>
+</tr>
+</tbody>
+</table>
+<p>两个层级的目录结构几乎完全对称：</p>
+<div class="highlight"><pre><span></span><code>~/.claude/                          # 全局配置（你的 home 目录下）
+├── CLAUDE.md                       # 全局指令，适用于所有项目
+├── settings.json                   # 全局设置
+├── rules/                          # 全局规则
+├── skills/                         # 全局技能
+└── agents/                         # 全局审查员
+
+你的项目/                            # 项目配置
+├── CLAUDE.md                       # 项目专属指令（这个在项目根目录）
+└── .claude/
+    ├── CLAUDE.md                   # 也可以放这里，效果相同
+    ├── settings.json               # 项目设置
+    ├── settings.local.json         # 个人的项目设置（不提交到 Git）
+    ├── rules/                      # 项目规则
+    ├── skills/                     # 项目技能
+    └── agents/                     # 项目审查员
+</code></pre></div>
+
+<p>当 Claude Code 在某个项目文件夹中启动时，它会<strong>同时读取两个层级的配置并合并</strong>。如果全局和项目存在冲突，项目级优先。</p>
+<p><strong>设计原则</strong>是：跨项目通用的东西放全局（比如你个人的写作风格偏好、通用的 commit 规范），项目专属的东西放项目级（比如特定的数据分析流程、特定的论文格式要求）。</p>
+<blockquote>
+<p><strong>给新手的建议</strong>：刚开始不用纠结全局和项目怎么分。先把所有配置都放在项目的 <code>.claude/</code> 目录里。等你开第二个研究项目时，自然会发现哪些文件每次都在复制——那些就应该提到 <code>~/.claude/</code> 全局目录中。</p>
+</blockquote>
+<h4 id="311-agentsmd">3.1.1 关于 AGENTS.md</h4>
+<p>你可能在一些教程中看到过 AGENTS.md 这个文件名。它最初由 OpenAI 的 Codex CLI 推广，现在已成为 Linux 基金会管理的开放标准，被多种 AI 编程工具支持（Claude Code、Codex CLI、Gemini CLI 等）。</p>
+<p>Claude Code 的处理逻辑是：如果一个目录下没有 CLAUDE.md，它会自动查找 AGENTS.md 作为替代。换句话说，AGENTS.md 和 CLAUDE.md 的功能是等价的，区别在于 AGENTS.md 具有跨工具兼容性——如果你的团队中有人使用 Claude Code、有人使用 Codex CLI，维护一份 AGENTS.md 就能让所有人共享同一套项目规则。</p>
+<p>对于本文档的读者，<strong>只使用 CLAUDE.md 即可</strong>。如果你未来有跨工具协作的需求，再考虑迁移到 AGENTS.md，或让 CLAUDE.md 引用 AGENTS.md 的内容。</p>
+<hr />
+<h3 id="32">3.2 概念总览：四层配置体系</h3>
+<p>回顾前文"人机协作的三个阶段"，Claude Code 的配置系统正是 Harness Engineering（智能体框架工程）的具体实现。你不是在写一条提示词，而是在搭建一套让 AI 持续、稳定、高质量工作的基础设施。</p>
+<p>这套体系由四层构成，每一层解决不同的问题：</p>
+<table>
+<thead>
+<tr>
+<th>层级</th>
+<th>文件位置</th>
+<th>作用</th>
+<th>类比</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>CLAUDE.md</strong></td>
+<td>项目根目录</td>
+<td>项目的"宪法"，核心原则与全局规则</td>
+<td>公司章程</td>
+</tr>
+<tr>
+<td><strong>Rules</strong></td>
+<td><code>.claude/rules/</code></td>
+<td>按文件类型自动加载的领域知识</td>
+<td>各部门的操作规范</td>
+</tr>
+<tr>
+<td><strong>Skills</strong></td>
+<td><code>.claude/skills/</code></td>
+<td>可复用的工作流，用斜杠命令调用</td>
+<td>标准作业程序（SOP）</td>
+</tr>
+<tr>
+<td><strong>Agents</strong></td>
+<td><code>.claude/agents/</code></td>
+<td>专业化的审查员，各司其职</td>
+<td>质检部门的不同岗位</td>
+</tr>
+</tbody>
+</table>
+<p>它们之间的关系是递进的：CLAUDE.md 告诉 Claude"你是谁、遵守什么原则"；Rules 告诉它"处理这类文件时要注意什么"；Skills 告诉它"执行这个任务时按什么流程走"；Agents 则是独立的审查角色，从不同维度检验工作质量。</p>
+<p>在动手之前，你的项目文件夹结构应该大致如下：</p>
+<div class="highlight"><pre><span></span><code>my-research-project/
+├── CLAUDE.md                  # 项目宪法
+├── .claude/
+│   ├── rules/                 # 规则文件
+│   ├── skills/                # 技能文件
+│   └── agents/                # 审查员配置
+├── paper/                     # 论文 .tex 或 .docx 文件
+├── scripts/                   # R/Python/Stata 分析脚本
+├── data/
+│   ├── raw/                   # 原始数据（不修改）
+│   └── derived/               # 清洗后的数据
+├── output/
+│   ├── tables/                # 回归表等
+│   └── figures/               # 图表
+└── quality_reports/
+    ├── plans/                 # 任务计划
+    └── session_logs/          # 会话日志
+</code></pre></div>
+
+<blockquote>
+<p><strong>提示</strong>：你不需要一次性搭好所有层。完全可以从 CLAUDE.md 开始，用一段时间后再逐步添加 Rules、Skills 和 Agents。</p>
+</blockquote>
+<hr />
+<h3 id="33-claudemd">3.3 第一层：CLAUDE.md — 项目宪法</h3>
+<h4 id="331">3.3.1 它是什么</h4>
+<p>CLAUDE.md 是放在项目根目录下的一个 Markdown 文件。Claude Code <strong>每次启动时都会自动读取它</strong>，相当于你在每次对话开始前对 Claude 说的一段"背景介绍 + 行为准则"。</p>
+<p>一个关键的设计约束：Claude 大约能可靠地遵循 100-150 条自定义指令，而系统提示已经占用了约 50 条。这意味着留给 CLAUDE.md 的有效指令空间大约是 <strong>100-150 条</strong>。因此，CLAUDE.md 应该是一份精简的"宪法"（建议控制在 120-200 行以内），只放核心原则和指针，详细内容应当放到 Rules 和 Skills 中。</p>
+<h4 id="332">3.3.2 应该写什么</h4>
+<p>一个面向学术研究的 CLAUDE.md 通常包含以下部分：</p>
+<ol>
+<li><strong>项目基本信息</strong>：项目名称、研究领域、所在机构</li>
+<li><strong>核心工作原则</strong>：如"先规划再执行"、"执行后验证"、"所有修正记录到 MEMORY.md"</li>
+<li><strong>项目目录结构说明</strong>：让 Claude 知道数据放在哪、脚本放在哪、论文放在哪</li>
+<li><strong>工具链声明</strong>：你使用哪些语言和工具（R、Python、Stata、LaTeX 等）</li>
+<li><strong>常用命令速查表</strong>：列出你定义的 Skills 及其用途</li>
+<li><strong>质量标准</strong>：代码风格、论文格式、表格图表的规范</li>
+<li><strong>当前项目状态</strong>：各部分的进度，方便 Claude 在新会话中快速恢复上下文</li>
+</ol>
+<h4 id="333">3.3.3 实操示例</h4>
+<p>以下是一个面向社会科学研究的 CLAUDE.md 模板。你需要根据自己的项目修改方括号中的内容：</p>
+<div class="highlight"><pre><span></span><code><span class="gh"># CLAUDE.MD — 学术研究工作流</span>
+
+<span class="gs">**项目:**</span> [你的项目名称，如：家庭共餐对儿童发展的影响]
+<span class="gs">**机构:**</span> [你的机构名称]
+<span class="gs">**研究领域:**</span> 社会学/社会科学
+
+<span class="gu">## 核心原则</span>
+<span class="k">1.</span> <span class="gs">**先规划再执行**</span> — 非平凡任务必须先进入 plan mode，草拟计划并保存到 quality_reports/plans/
+<span class="k">2.</span> <span class="gs">**执行后验证**</span> — 代码必须运行通过，才能报告完成
+<span class="k">3.</span> <span class="gs">**质量门槛**</span> — 80 分可 commit，90 分可提交审查，低于 80 必须修复
+<span class="k">4.</span> <span class="gs">**记录修正**</span> — 所有修正和经验教训记录到 MEMORY.md，防止跨会话重复犯错
+<span class="k">5.</span> <span class="gs">**单一真相源**</span> — 每个产出只有一个权威版本，其他版本从它派生
+
+<span class="gu">## 项目结构</span>
+<span class="k">-</span><span class="w"> </span><span class="sb">`paper/`</span> — 论文 .tex 或 .docx 文件
+<span class="k">-</span><span class="w"> </span><span class="sb">`scripts/`</span> — R/Python/Stata 分析脚本
+<span class="k">-</span><span class="w"> </span><span class="sb">`data/raw/`</span> — 原始数据（**绝对不修改**）
+<span class="k">-</span><span class="w"> </span><span class="sb">`data/derived/`</span> — 清洗后的数据
+<span class="k">-</span><span class="w"> </span><span class="sb">`output/tables/`</span> — 回归表
+<span class="k">-</span><span class="w"> </span><span class="sb">`output/figures/`</span> — 图表
+<span class="k">-</span><span class="w"> </span><span class="sb">`quality_reports/plans/`</span> — 任务计划
+<span class="k">-</span><span class="w"> </span><span class="sb">`quality_reports/session_logs/`</span> — 会话日志（记录决策原因）
+
+<span class="gu">## 工具链</span>
+<span class="k">-</span><span class="w"> </span><span class="gs">**R:**</span> tidyverse, fixest, ggplot2（数据分析、可视化）
+<span class="k">-</span><span class="w"> </span><span class="gs">**Python:**</span> pandas, statsmodels（数据处理）
+<span class="k">-</span><span class="w"> </span><span class="gs">**Stata:**</span> 计量经济学分析
+<span class="k">-</span><span class="w"> </span><span class="gs">**LaTeX:**</span> xelatex + bibtex（论文写作）
+<span class="k">-</span><span class="w"> </span><span class="gs">**文献管理:**</span> Zotero + .bib 文件
+
+<span class="gu">## 常用命令</span>
+| 命令 | 用途 |
+|------|------|
+| <span class="sb">`/data-analysis [描述]`</span> | 端到端数据分析 |
+| <span class="sb">`/proofread [file]`</span> | 语法和一致性检查 |
+| <span class="sb">`/review-paper [file]`</span> | 论文审查 |
+| <span class="sb">`/commit`</span> | 暂存、提交、推送 |
+
+<span class="gu">## 质量标准</span>
+<span class="k">-</span><span class="w"> </span><span class="gs">**代码:**</span> 每个脚本顶部设置随机种子；注释解释&quot;为什么&quot;而非&quot;做了什么&quot;
+<span class="k">-</span><span class="w"> </span><span class="gs">**表格:**</span> 标准误放括号内，标注显著性星号，注明固定效应
+<span class="k">-</span><span class="w"> </span><span class="gs">**图表:**</span> 统一配色方案，最小 12pt 字体，直接标注而非图例
+<span class="k">-</span><span class="w"> </span><span class="gs">**论文:**</span> 引用交叉验证，数学符号全文一致
+
+<span class="gu">## 当前状态</span>
+| 组件 | 状态 | 备注 |
+|------|------|------|
+| 数据清洗 | 完成 | survey_data_clean.csv |
+| 描述性统计 | 进行中 | 缺少分组对比 |
+| 回归分析 | 未开始 | |
+| 论文初稿 | 未开始 | |
+</code></pre></div>
+
+<h4 id="334">3.3.4 使用要点</h4>
+<ul>
+<li><strong>保持精简</strong>：抵制把所有细节都塞进 CLAUDE.md 的冲动。细节放 Rules 和 Skills 里。</li>
+<li><strong>持续更新"当前状态"</strong>：每次结束工作会话时，更新项目状态表，这样下次启动 Claude Code 时它能立刻知道进度。</li>
+<li><strong>MEMORY.md 配合使用</strong>：在项目根目录创建一个 MEMORY.md，专门记录 Claude 犯过的错误和你纠正后的经验。Claude 每次启动都会读取它，避免重复犯同一个错。</li>
+</ul>
+<hr />
+<h3 id="34-rules">3.4 第二层：Rules — 自动加载的领域知识</h3>
+<h4 id="341">3.4.1 它是什么</h4>
+<p>Rules 是放在 <code>.claude/rules/</code> 目录下的 Markdown 文件。与 CLAUDE.md 的区别在于：CLAUDE.md 每次会话都全量加载，而 Rules 可以设置<strong>路径作用域（path-scoping）</strong>——即只在 Claude 处理特定类型的文件时才自动加载。</p>
+<p>为什么这很重要？因为前面提到，Claude 的指令遵循能力有上限。如果你把 R 代码规范、LaTeX 写作规范、Stata 使用规则全部塞进 CLAUDE.md，很快就会超出 Claude 的有效处理能力。路径作用域的设计让你可以按需加载：Claude 编辑 <code>.R</code> 文件时只看到 R 的规范，编辑 <code>.tex</code> 文件时只看到 LaTeX 的规范，互不干扰。</p>
+<h4 id="342">3.4.2 两种规则类型</h4>
+<p><strong>始终加载的规则（无 paths 声明）</strong>：行为类似 CLAUDE.md 的补充条款，每次会话都会被读取。适合放通用的工作流程规则，如"先规划再执行"的详细流程。</p>
+<p><strong>路径限定的规则（有 paths 声明）</strong>：只在 Claude 操作匹配路径的文件时才加载。需要在文件顶部用 YAML frontmatter 声明作用范围。</p>
+<h4 id="343">3.4.3 实操示例</h4>
+<p>以下是几个对社科研究者最实用的规则文件。在你的项目中创建 <code>.claude/rules/</code> 目录，然后把这些文件放进去。</p>
+<p><strong>示例 1：先规划再执行（始终加载）</strong></p>
+<p>文件路径：<code>.claude/rules/plan-first-workflow.md</code></p>
+<div class="highlight"><pre><span></span><code><span class="gh"># 先规划再执行工作流</span>
+
+<span class="gu">## 何时触发</span>
+任何非平凡任务（涉及多文件、多步骤、或预计超过 30 分钟的工作）
+必须先进入 plan mode。
+
+<span class="gu">## 流程</span>
+<span class="k">1.</span> 分析任务范围，识别依赖
+<span class="k">2.</span> 草拟计划，包含：目标、方法、涉及文件、验证步骤
+<span class="k">3.</span> 将计划保存到 <span class="sb">`quality_reports/plans/YYYY-MM-DD_描述.md`</span>
+<span class="k">4.</span> 呈现给用户，等待批准
+<span class="k">5.</span> 批准后按计划逐步执行
+<span class="k">6.</span> 完成后更新会话日志
+
+<span class="gu">## 为什么保存到磁盘</span>
+Claude Code 的上下文窗口会自动压缩。如果计划只存在对话中，
+压缩后可能丢失。保存到磁盘后，即使切换会话也能恢复上下文。
+</code></pre></div>
+
+<p><strong>示例 2：R 代码规范（路径限定）</strong></p>
+<p>文件路径：<code>.claude/rules/r-coding-standards.md</code></p>
+<div class="highlight"><pre><span></span><code>---
+paths:
+<span class="w">  </span><span class="k">-</span><span class="w"> </span>&quot;scripts/**/*.R&quot;
+<span class="gu">  - &quot;scripts/**/*.r&quot;</span>
+<span class="gu">---</span>
+
+<span class="gh"># R 代码规范</span>
+
+<span class="gu">## 基本要求</span>
+<span class="k">-</span><span class="w"> </span>脚本顶部设置随机种子：`set.seed(20260401)` 格式为 YYYYMMDD
+<span class="k">-</span><span class="w"> </span>使用 tidyverse 风格：管道操作符 <span class="sb">`|&gt;`</span> 而非 <span class="sb">`%&gt;%`</span>
+<span class="k">-</span><span class="w"> </span>变量命名使用 snake_case
+<span class="k">-</span><span class="w"> </span>每个脚本顶部注明用途、输入数据、输出文件
+
+<span class="gu">## 统计分析</span>
+<span class="k">-</span><span class="w"> </span>回归结果使用 <span class="sb">`fixest`</span> 包
+<span class="k">-</span><span class="w"> </span>报告异质性稳健标准误（HC1 或聚类标准误）
+<span class="k">-</span><span class="w"> </span>输出表格使用 <span class="sb">`modelsummary`</span> 或 <span class="sb">`stargazer`</span>
+
+<span class="gu">## 输出规范</span>
+<span class="k">-</span><span class="w"> </span>表格保存到 <span class="sb">`output/tables/`</span>，格式为 .tex 或 .csv
+<span class="k">-</span><span class="w"> </span>图表保存到 <span class="sb">`output/figures/`</span>，格式为 .pdf 或 .png
+<span class="k">-</span><span class="w"> </span>图表使用 <span class="sb">`theme_minimal()`</span>，字体不小于 12pt
+</code></pre></div>
+
+<blockquote>
+<p>注意文件顶部的 <code>paths:</code> 声明——这告诉 Claude Code：只有在处理 <code>scripts/</code> 目录下的 <code>.R</code> 文件时，才加载这条规则。</p>
+</blockquote>
+<p><strong>示例 3：LaTeX 论文写作规范（路径限定）</strong></p>
+<p>文件路径：<code>.claude/rules/latex-writing.md</code></p>
+<div class="highlight"><pre><span></span><code>---
+paths:
+<span class="gu">  - &quot;paper/**/*.tex&quot;</span>
+<span class="gu">---</span>
+
+<span class="gh"># LaTeX 论文写作规范</span>
+
+<span class="gu">## 结构</span>
+<span class="k">-</span><span class="w"> </span>主文件为 <span class="sb">`paper/main.tex`</span>
+<span class="k">-</span><span class="w"> </span>各章节拆分为独立 .tex 文件，用 <span class="sb">`\input{}`</span> 引入
+<span class="k">-</span><span class="w"> </span>参考文献使用 <span class="sb">`natbib`</span> + <span class="sb">`\citet{}`</span> / <span class="sb">`\citep{}`</span>
+
+<span class="gu">## 格式</span>
+<span class="k">-</span><span class="w"> </span>表格使用 <span class="sb">`booktabs`</span> 包（\toprule, \midrule, \bottomrule）
+<span class="k">-</span><span class="w"> </span>所有浮动体（表格、图片）必须有 \label{} 和 \caption{}
+<span class="k">-</span><span class="w"> </span>交叉引用使用 <span class="sb">`\autoref{}`</span>
+
+<span class="gu">## 编译</span>
+<span class="k">-</span><span class="w"> </span>编译命令：xelatex → bibtex → xelatex → xelatex
+<span class="k">-</span><span class="w"> </span>编译前检查是否有未定义的引用或标签
+</code></pre></div>
+
+<p><strong>示例 4：Stata 代码规范（路径限定）</strong></p>
+<p>文件路径：<code>.claude/rules/stata-standards.md</code></p>
+<div class="highlight"><pre><span></span><code>---
+paths:
+<span class="w">  </span><span class="k">-</span><span class="w"> </span>&quot;scripts/**/*.do&quot;
+<span class="gu">  - &quot;scripts/**/*.ado&quot;</span>
+<span class="gu">---</span>
+
+<span class="gh"># Stata 代码规范</span>
+
+<span class="gu">## 基本要求</span>
+<span class="k">-</span><span class="w"> </span>脚本开头：`clear all`、`set more off`、`set seed YYYYMMDD`
+<span class="k">-</span><span class="w"> </span>使用相对路径，不使用绝对路径
+<span class="k">-</span><span class="w"> </span>注释说明每个分析步骤的目的
+
+<span class="gu">## 回归输出</span>
+<span class="k">-</span><span class="w"> </span>使用 <span class="sb">`eststo`</span> / <span class="sb">`esttab`</span> 或 <span class="sb">`outreg2`</span> 输出表格
+<span class="k">-</span><span class="w"> </span>报告聚类标准误时注明聚类变量
+<span class="k">-</span><span class="w"> </span>表格输出到 <span class="sb">`output/tables/`</span>
+
+<span class="gu">## 数据处理</span>
+<span class="k">-</span><span class="w"> </span>原始数据从 <span class="sb">`data/raw/`</span> 读取，**永远不修改原始数据**
+<span class="k">-</span><span class="w"> </span>处理后的数据保存到 <span class="sb">`data/derived/`</span>
+<span class="k">-</span><span class="w"> </span>每次 merge 后检查 <span class="sb">`_merge`</span> 变量并记录匹配率
+</code></pre></div>
+
+<p><strong>示例 5：会话日志规则（始终加载）</strong></p>
+<p>文件路径：<code>.claude/rules/session-logging.md</code></p>
+<div class="highlight"><pre><span></span><code><span class="gh"># 会话日志规则</span>
+
+<span class="gu">## 目的</span>
+Git 记录了你做了什么（what），会话日志记录你为什么这么做（why）。
+
+<span class="gu">## 三个写入时机</span>
+
+<span class="gu">### 1. 计划批准后</span>
+创建 <span class="sb">`quality_reports/session_logs/YYYY-MM-DD_描述.md`</span>，记录：
+<span class="k">-</span><span class="w"> </span>目标和计划摘要
+<span class="k">-</span><span class="w"> </span>选择该方法的原因
+
+<span class="gu">### 2. 执行过程中</span>
+每当做出设计决策、发现问题、或偏离计划时，追加 1-3 行记录。
+这是最重要的行为——上下文压缩会丢弃对话中的决策理由。
+
+<span class="gu">### 3. 任务完成时</span>
+追加最终状态、遗留问题、下次会话的建议起点。
+</code></pre></div>
+
+<h4 id="344">3.4.4 使用要点</h4>
+<ul>
+<li><strong>路径作用域是关键优势</strong>：合理使用 <code>paths:</code> 可以让每种文件类型只加载与之相关的规则，避免浪费指令预算。</li>
+<li><strong>规则文件不是越多越好</strong>：起步阶段 5-8 个规则文件已经足够。随着使用经验的积累再逐步添加。</li>
+<li><strong>规则内容要具体</strong>：避免写"写出高质量的代码"这种笼统指令。要写"回归结果使用 fixest 包，报告异质性稳健标准误"这样 Claude 能直接执行的具体要求。</li>
+</ul>
+<hr />
+<h3 id="35-skills">3.5 第三层：Skills — 可复用的工作流</h3>
+<h4 id="351">3.5.1 它是什么</h4>
+<p>Skills（技能）是放在 <code>.claude/skills/</code> 目录下的工作流模板。每个 Skill 是一个<strong>文件夹</strong>，里面包含一个 <code>SKILL.md</code> 文件以及可选的辅助资源（脚本、模板、参考文档等）。</p>
+<p>Skill 与 Rule 的核心区别在于<strong>触发方式</strong>：Rule 是根据你操作的文件类型自动加载的背景知识，你感觉不到它的存在；Skill 则是一套显式的操作流程，你可以用斜杠命令手动调用（如输入 <code>/data-analysis</code>），也可以让 Claude 根据任务描述自动选择合适的 Skill。</p>
+<p>用之前的组织制度类比来说：Rule 是每个部门默默遵守的操作规范，Skill 则是针对具体任务的标准作业程序（SOP）——当你说"现在要做数据分析"时，Claude 会拿出对应的 SOP 按步骤执行。</p>
+<h4 id="352">3.5.2 文件结构</h4>
+<p>一个 Skill 的基本结构如下：</p>
+<div class="highlight"><pre><span></span><code>.claude/skills/
+└── data-analysis/              # Skill 名称（同时也是斜杠命令名）
+    ├── SKILL.md                # 核心文件：指令和元数据
+    ├── references/             # 可选：参考文档
+    │   └── regression-checklist.md
+    └── scripts/                # 可选：辅助脚本
+        └── table-formatter.R
+</code></pre></div>
+
+<p>核心是 <code>SKILL.md</code> 文件，它由两部分组成：顶部的 <strong>YAML frontmatter</strong>（元数据，控制 Skill 的行为方式）和下方的 <strong>Markdown 内容</strong>（Claude 执行任务时遵循的具体指令）。</p>
+<h4 id="353-yaml-frontmatter">3.5.3 YAML Frontmatter 字段说明</h4>
+<p>yaml</p>
+<div class="highlight"><pre><span></span><code><span class="nn">---</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">data-analysis</span><span class="w">              </span><span class="c1"># 显示名称，也是 /斜杠命令 的名字</span>
+<span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">&gt;</span><span class="w">                    </span><span class="c1"># 描述——Claude 根据这段话决定是否自动调用</span>
+<span class="w">  </span><span class="no">端到端数据分析。当用户要求进行统计分析、</span>
+<span class="w">  </span><span class="no">回归建模、数据探索或生成统计表格时使用。</span>
+<span class="nt">argument-hint</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;[分析描述]&quot;</span><span class="w">       </span><span class="c1"># 输入 /data-analysis 后的提示文字</span>
+<span class="nn">---</span>
+</code></pre></div>
+
+<p>几个重要的可选字段：</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>作用</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>disable-model-invocation: true</code></td>
+<td>禁止 Claude 自动调用，只能手动 <code>/</code> 触发</td>
+<td>高风险操作（如删除文件、提交代码）</td>
+</tr>
+<tr>
+<td><code>user-invocable: false</code></td>
+<td>不在 <code>/</code> 菜单中显示</td>
+<td>只供其他 Skill 或 Agent 内部调用的后台知识</td>
+</tr>
+<tr>
+<td><code>context: fork</code></td>
+<td>在隔离的子上下文中运行，不污染主对话</td>
+<td>耗时较长的研究或审查任务</td>
+</tr>
+<tr>
+<td><code>agent: Explore</code></td>
+<td>指定用哪个 Agent 执行</td>
+<td>只需要读取不需要修改文件的任务</td>
+</tr>
+<tr>
+<td><code>allowed-tools: Bash(R*), Read, Write</code></td>
+<td>该 Skill 激活时允许使用的工具</td>
+<td>控制权限边界</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>description 字段是关键</strong>：它不是给人看的说明文字，而是给 Claude 看的"触发条件"。写法应该是"当用户要求做 X 时使用"，而不是"这个 Skill 可以做 X"。前者帮助 Claude 判断何时自动调用，后者只是一句描述。</p>
+</blockquote>
+<h4 id="354">3.5.4 实操示例</h4>
+<p>以下是几个面向社科研究的 Skill，你可以直接在项目中创建对应的文件夹和文件。</p>
+<p><strong>示例 1：数据分析（<code>/data-analysis</code>）</strong></p>
+<p>文件路径：<code>.claude/skills/data-analysis/SKILL.md</code></p>
+<div class="highlight"><pre><span></span><code>---
+name: data-analysis
+description: &gt;
+  端到端数据分析。当用户要求进行描述性统计、回归分析、
+  数据探索、生成统计表格或可视化时使用。
+<span class="gu">argument-hint: &quot;[分析描述]&quot;</span>
+<span class="gu">---</span>
+
+<span class="gh"># 数据分析流程</span>
+
+执行数据分析时，严格按照以下步骤进行：
+
+<span class="gu">## 1. 理解需求</span>
+<span class="k">-</span><span class="w"> </span>确认分析目标（描述性统计 / 回归 / 假设检验 / 探索性分析）
+<span class="k">-</span><span class="w"> </span>确认使用的数据文件（从 <span class="sb">`data/raw/`</span> 或 <span class="sb">`data/derived/`</span> 读取）
+<span class="k">-</span><span class="w"> </span>确认输出格式（表格 / 图表 / 两者都要）
+
+<span class="gu">## 2. 数据检查</span>
+<span class="k">-</span><span class="w"> </span>报告观测数量、变量数量、缺失值情况
+<span class="k">-</span><span class="w"> </span>检查关键变量的分布（均值、标准差、极端值）
+<span class="k">-</span><span class="w"> </span>如果发现数据问题，**先报告给用户，不要自行处理**
+
+<span class="gu">## 3. 执行分析</span>
+<span class="k">-</span><span class="w"> </span>脚本保存到 <span class="sb">`scripts/`</span> 目录
+<span class="k">-</span><span class="w"> </span>脚本顶部设置随机种子（`set.seed(YYYYMMDD)` 格式）
+<span class="k">-</span><span class="w"> </span>每一步分析都附注释说明目的
+<span class="k">-</span><span class="w"> </span>回归模型使用 <span class="sb">`fixest`</span> 包，报告聚类标准误
+
+<span class="gu">## 4. 输出结果</span>
+<span class="k">-</span><span class="w"> </span>表格保存到 <span class="sb">`output/tables/`</span>（.tex 或 .csv）
+<span class="k">-</span><span class="w"> </span>图表保存到 <span class="sb">`output/figures/`</span>（.pdf 或 .png）
+<span class="k">-</span><span class="w"> </span>图表使用 <span class="sb">`theme_minimal()`</span>，字体不小于 12pt
+
+<span class="gu">## 5. 验证</span>
+<span class="k">-</span><span class="w"> </span>代码必须完整运行通过，不能有报错
+<span class="k">-</span><span class="w"> </span>对结果做基本的合理性检查（系数方向、显著性、样本量）
+<span class="k">-</span><span class="w"> </span>如果结果异常，主动向用户报告
+
+<span class="gu">## 常见陷阱</span>
+<span class="k">-</span><span class="w"> </span>不要在 <span class="sb">`data/raw/`</span> 中修改任何文件
+<span class="k">-</span><span class="w"> </span>不要使用 <span class="sb">`rm(list=ls())`</span>——它会清除用户环境中的其他对象
+<span class="k">-</span><span class="w"> </span>合并数据后必须检查 <span class="sb">`_merge`</span> 变量（Stata）或 join 后的行数变化（R）
+</code></pre></div>
+
+<p><strong>示例 2：论文校对（<code>/proofread</code>）</strong></p>
+<p>文件路径：<code>.claude/skills/proofread/SKILL.md</code></p>
+<div class="highlight"><pre><span></span><code>---
+name: proofread
+description: &gt;
+  学术论文校对。当用户要求检查语法、拼写、学术写作风格、
+  引用一致性或论文格式时使用。
+<span class="gu">argument-hint: &quot;[文件路径]&quot;</span>
+<span class="gu">---</span>
+
+<span class="gh"># 学术论文校对流程</span>
+
+对指定文件进行逐段审查，检查以下维度：
+
+<span class="gu">## 语言与语法</span>
+<span class="k">-</span><span class="w"> </span>语法错误、拼写错误、标点使用
+<span class="k">-</span><span class="w"> </span>主谓一致、时态一致性
+<span class="k">-</span><span class="w"> </span>避免口语化表达和非正式用语
+<span class="k">-</span><span class="w"> </span>被动语态不必完全消除，但避免过度使用
+
+<span class="gu">## 学术写作风格</span>
+<span class="k">-</span><span class="w"> </span>论点表述是否清晰、有逻辑
+<span class="k">-</span><span class="w"> </span>段落之间的过渡是否自然
+<span class="k">-</span><span class="w"> </span>是否存在不必要的重复
+<span class="k">-</span><span class="w"> </span>术语使用是否全文一致
+
+<span class="gu">## 引用与参考文献</span>
+<span class="k">-</span><span class="w"> </span>每个论点是否有对应的引用支撑
+<span class="k">-</span><span class="w"> </span>引用格式是否一致（APA / Chicago / 期刊特定格式）
+<span class="k">-</span><span class="w"> </span>文内引用与参考文献列表是否一一对应
+<span class="k">-</span><span class="w"> </span>检查是否有&quot;孤立引用&quot;（参考文献列表中有但正文未引用的）
+
+<span class="gu">## 输出格式</span>
+生成校对报告，按严重程度分类：
+<span class="k">-</span><span class="w"> </span>🔴 <span class="gs">**错误**</span>：必须修改（语法错误、引用缺失）
+<span class="k">-</span><span class="w"> </span>🟡 <span class="gs">**建议**</span>：强烈建议修改（表述不清、逻辑跳跃）
+<span class="k">-</span><span class="w"> </span>🔵 <span class="gs">**风格**</span>：可以考虑修改（更好的措辞选择）
+</code></pre></div>
+
+<p><strong>示例 3：论文审查（<code>/review-paper</code>）</strong></p>
+<p>文件路径：<code>.claude/skills/review-paper/SKILL.md</code></p>
+<div class="highlight"><pre><span></span><code>---
+name: review-paper
+description: &gt;
+  对论文进行全面学术审查。当用户要求审查论文质量、
+  检查研究方法、评估论证逻辑或模拟审稿意见时使用。
+argument-hint: &quot;[文件路径]&quot;
+<span class="gu">context: fork</span>
+<span class="gu">---</span>
+
+<span class="gh"># 学术论文审查</span>
+
+以匿名审稿人的视角对论文进行全面审查。
+
+<span class="gu">## 审查维度</span>
+
+<span class="gu">### 1. 研究问题与贡献</span>
+<span class="k">-</span><span class="w"> </span>研究问题是否清晰明确？
+<span class="k">-</span><span class="w"> </span>对现有文献的贡献是什么？是否充分论证了贡献的重要性？
+<span class="k">-</span><span class="w"> </span>与最相近的已有研究相比，创新点在哪里？
+
+<span class="gu">### 2. 理论框架</span>
+<span class="k">-</span><span class="w"> </span>理论框架是否适用于该研究问题？
+<span class="k">-</span><span class="w"> </span>核心概念的操作化定义是否合理？
+<span class="k">-</span><span class="w"> </span>假设推导的逻辑链是否完整？
+
+<span class="gu">### 3. 研究方法</span>
+<span class="k">-</span><span class="w"> </span>数据来源和样本选择是否合理？
+<span class="k">-</span><span class="w"> </span>识别策略能否支撑因果推断？如果声称因果关系，识别假设是否可信？
+<span class="k">-</span><span class="w"> </span>是否存在遗漏变量、选择偏误、反向因果等问题？
+<span class="k">-</span><span class="w"> </span>稳健性检验是否充分？
+
+<span class="gu">### 4. 结果与讨论</span>
+<span class="k">-</span><span class="w"> </span>结果呈现是否清晰？表格和图表是否自洽？
+<span class="k">-</span><span class="w"> </span>对结果的解释是否过度推断？
+<span class="k">-</span><span class="w"> </span>局限性讨论是否诚实且充分？
+
+<span class="gu">### 5. 写作质量</span>
+<span class="k">-</span><span class="w"> </span>行文是否清晰、有逻辑？
+<span class="k">-</span><span class="w"> </span>篇幅是否合理？是否有可以精简的部分？
+
+<span class="gu">## 输出格式</span>
+生成一份结构化的审查报告：
+<span class="k">1.</span> <span class="gs">**总体评价**</span>（2-3 句话概括）
+<span class="k">2.</span> <span class="gs">**主要优点**</span>（3-5 条）
+<span class="k">3.</span> <span class="gs">**主要问题**</span>（按严重程度排列）
+<span class="k">4.</span> <span class="gs">**具体修改建议**</span>（对应到论文的具体段落或页码）
+<span class="k">5.</span> <span class="gs">**小问题**</span>（格式、拼写等）
+</code></pre></div>
+
+<p><strong>示例 4：Git 提交（<code>/commit</code>）</strong></p>
+<p>文件路径：<code>.claude/skills/commit/SKILL.md</code></p>
+<div class="highlight"><pre><span></span><code>---
+name: commit
+description: &gt;
+  暂存、提交并推送代码变更。当用户说&quot;提交&quot;、&quot;commit&quot;、
+  &quot;保存到 git&quot; 时使用。
+<span class="gu">disable-model-invocation: true</span>
+<span class="gu">---</span>
+
+<span class="gh"># Git 提交流程</span>
+
+<span class="gu">## 步骤</span>
+<span class="k">1.</span> 运行 <span class="sb">`git status`</span> 和 <span class="sb">`git diff --stat`</span> 查看变更概览
+<span class="k">2.</span> 将变更摘要呈现给用户确认
+<span class="k">3.</span> 用户确认后，执行：
+<span class="w">   </span><span class="k">-</span><span class="w"> </span><span class="sb">`git add -A`</span>
+<span class="w">   </span><span class="k">-</span><span class="w"> </span><span class="sb">`git commit -m &quot;简洁描述变更内容&quot;`</span>
+<span class="w">   </span><span class="k">-</span><span class="w"> </span>如果远程仓库已配置，询问用户是否 <span class="sb">`git push`</span>
+
+<span class="gu">## Commit Message 规范</span>
+<span class="k">-</span><span class="w"> </span>中文撰写，简洁明了
+<span class="k">-</span><span class="w"> </span>格式：`[类型] 描述`
+<span class="k">-</span><span class="w"> </span>类型包括：`[数据]`、`[分析]`、`[论文]`、`[配置]`、`[修复]`
+<span class="k">-</span><span class="w"> </span>示例：`[分析] 添加基准回归模型，包含OLS和固定效应`
+
+<span class="gu">## 安全检查</span>
+<span class="k">-</span><span class="w"> </span>提交前确认 <span class="sb">`.gitignore`</span> 已排除：原始数据文件、API 密钥、临时文件
+<span class="k">-</span><span class="w"> </span>如果发现敏感文件即将被提交，**立即警告用户并停止**
+</code></pre></div>
+
+<blockquote>
+<p>注意这个 Skill 设置了 <code>disable-model-invocation: true</code>——这意味着 Claude 不会自动触发提交操作，必须由你手动输入 <code>/commit</code> 才会执行。对于有副作用的操作（修改 Git 历史），这种显式控制是必要的。</p>
+</blockquote>
+<h4 id="355-skill">3.5.5 进阶：Skill 中的动态上下文</h4>
+<p>Skill 支持在 Markdown 内容中嵌入 Shell 命令，Claude 调用 Skill 时会先执行这些命令，将结果注入上下文。语法是 <code>!</code> 加反引号：</p>
+<div class="highlight"><pre><span></span><code><span class="gu">## 当前项目状态</span>
+<span class="k">-</span><span class="w"> </span>Git 状态: !<span class="sb">`git status --short`</span>
+<span class="k">-</span><span class="w"> </span>最近 5 次提交: !<span class="sb">`git log --oneline -5`</span>
+<span class="k">-</span><span class="w"> </span>数据文件列表: !<span class="sb">`ls data/raw/`</span>
+</code></pre></div>
+
+<p>这意味着每次调用 Skill 时，Claude 看到的不是静态文本，而是实时的项目状态。对于数据分析这类 Skill，你可以让它在启动时先自动获取数据文件列表、当前分支等信息。</p>
+<h4 id="356">3.5.6 使用要点</h4>
+<ul>
+<li><strong>Skill 是文件夹，不是单个文件</strong>：即使目前只有 <code>SKILL.md</code>，也要创建文件夹结构（如 <code>.claude/skills/data-analysis/SKILL.md</code>）。后续你可以往文件夹中添加 <code>references/</code>（参考文档）和 <code>scripts/</code>（辅助脚本），实现渐进式信息披露。</li>
+<li><strong>description 字段决定自动触发</strong>：写得像触发条件（"当用户要求 X 时使用"），而不是功能说明。</li>
+<li><strong>不要把 Skill 写成死板的步骤表</strong>：给出目标和约束，让 Claude 有灵活执行的空间。过于详细的步骤反而会限制 Claude 的判断力。</li>
+<li><strong>起步建议 3-5 个 Skill</strong>：<code>/data-analysis</code>、<code>/proofread</code>、<code>/review-paper</code>、<code>/commit</code> 是社科研究者最常用的起点。随着你的使用经验积累，再逐步添加。</li>
+<li><strong>Gotchas 部分很有价值</strong>：在每个 Skill 末尾添加"常见陷阱"或"注意事项"，记录 Claude 曾经犯过的错误。这些是最高信号密度的内容——它们直接防止重复犯错。</li>
+</ul>
+<hr />
+<h3 id="36-agents">3.6 第四层：Agents — 专业化审查员</h3>
+<h4 id="361">3.6.1 它是什么</h4>
+<p>Agents（子代理 / 审查员）是放在 <code>.claude/agents/</code> 目录下的 Markdown 文件。每个 Agent 定义了一个<strong>独立的专业角色</strong>，拥有自己的指令、工具权限和行为模式。</p>
+<p>Agent 与 Skill 的区别在于定位不同：Skill 是“做事的流程”——你调用 <code>/data-analysis</code>，Claude 按照流程执行分析；Agent 是“独立的人格角色”——你让 proofreader 审查论文时，它会以一个专业校对员的身份和视角来工作，而不是以Claude 的通用身份顺便帮你看看。</p>
+<p>为什么需要独立的角色？因为 Claude 有一个常见的失败模式：<strong>对自己的工作过于宽容</strong>。如果你让 Claude 写完一段代码然后自己审查，它倾向于说“看起来不错”。但如果你让一个专门的 reviewer Agent 来审查——这个 Agent 被明确告知“你的职责是找问题，找不出问题说明你没认真看”——审查质量会显著提高。Sant'Anna 教授的工作流中，“批评者只读不改、修复者不能自我批准”的对抗式设计，正是利用了这个原理。</p>
+<h4 id="362">3.6.2 文件结构</h4>
+<p>Agent 的定义比 Skill 简单——只需要一个 Markdown 文件：</p>
+<div class="highlight"><pre><span></span><code>.claude/agents/
+├── proofreader.md          # 语法校对员
+├── domain-reviewer.md      # 领域审查员
+└── r-reviewer.md           # R 代码审查员
+</code></pre></div>
+
+<p>每个文件同样由 YAML frontmatter（控制 Agent 的行为）和 Markdown 内容（Agent 的指令和角色描述）组成。</p>
+<h4 id="363-yaml-frontmatter">3.6.3 YAML Frontmatter 字段说明</h4>
+<div class="highlight"><pre><span></span><code><span class="nn">---</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">proofreader</span>
+<span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">学术论文语法和风格校对专家</span>
+<span class="nt">model</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sonnet</span><span class="w">                    </span><span class="c1"># 使用的模型（sonnet 更快更便宜，opus 更强）</span>
+<span class="nt">tools</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Read, Grep, Glob</span><span class="w">         </span><span class="c1"># 允许使用的工具</span>
+<span class="nt">disallowedTools</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Write, Edit</span><span class="w">    </span><span class="c1"># 禁止使用的工具</span>
+<span class="nt">permissionMode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">plan</span><span class="w">            </span><span class="c1"># 权限模式（plan = 只读 + 建议）</span>
+<span class="nt">maxTurns</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">50</span><span class="w">                    </span><span class="c1"># 最大执行轮次</span>
+<span class="nn">---</span>
+</code></pre></div>
+
+<p>几个关键字段的解释：</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>作用</th>
+<th>设计意图</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>model</code></td>
+<td>指定模型。可选 <code>haiku</code>（最快最便宜）、<code>sonnet</code>（平衡）、<code>opus</code>（最强）、<code>inherit</code>（与主会话一致）</td>
+<td>简单审查任务用 sonnet 省钱，复杂推理用 opus</td>
+</tr>
+<tr>
+<td><code>tools</code></td>
+<td>允许使用的工具白名单</td>
+<td>审查员通常只需要读取文件的权限</td>
+</tr>
+<tr>
+<td><code>disallowedTools</code></td>
+<td>禁止使用的工具</td>
+<td><strong>关键设计</strong>：让审查员无法修改文件，只能报告问题</td>
+</tr>
+<tr>
+<td><code>permissionMode</code></td>
+<td><code>plan</code> 表示只读建议模式，<code>acceptEdits</code> 表示可以修改文件</td>
+<td>审查员用 <code>plan</code>，修复者用 <code>acceptEdits</code></td>
+</tr>
+<tr>
+<td><code>maxTurns</code></td>
+<td>Agent 执行的最大轮次，超过自动停止</td>
+<td>防止 Agent 陷入无限循环</td>
+</tr>
+<tr>
+<td><code>skills</code></td>
+<td>预加载到 Agent 中的 Skill 列表</td>
+<td>让 Agent 在执行时能调用特定的 Skill</td>
+</tr>
+</tbody>
+</table>
+<h4 id="364-agent-skill">3.6.4 Agent 与 Skill 如何协作</h4>
+<p>一个典型的工作模式是：Skill 定义工作流程，在流程中的某个环节调用 Agent 进行审查。例如：</p>
+<ol>
+<li>你输入 <code>/review-paper paper/main.tex</code></li>
+<li>Skill 启动论文审查流程</li>
+<li>流程中调用 <code>domain-reviewer</code> Agent 审查研究方法</li>
+<li>再调用 <code>proofreader</code> Agent 审查语言质量</li>
+<li>两个 Agent 各自生成独立的审查报告</li>
+<li>Skill 汇总报告呈现给你</li>
+</ol>
+<p>你也可以直接在对话中调用 Agent，而不通过 Skill：</p>
+<div class="highlight"><pre><span></span><code>&gt; 用 proofreader 审查 paper/introduction.tex
+</code></pre></div>
+
+<p>Claude Code 会自动识别并调用对应的 Agent。</p>
+<h4 id="365">3.6.5 实操示例</h4>
+<p>以下是三个对社科研究者最实用的 Agent。</p>
+<p><strong>示例 1：语法校对员（proofreader）</strong></p>
+<p>文件路径：<code>.claude/agents/proofreader.md</code></p>
+<div class="highlight"><pre><span></span><code>---
+name: proofreader
+description: 学术论文语法和风格校对专家。审查语法、拼写、学术写作规范和引用一致性。
+model: sonnet
+tools: Read, Grep, Glob, Bash(wc*), Bash(grep*)
+disallowedTools: Write, Edit
+permissionMode: plan
+<span class="gu">maxTurns: 30</span>
+<span class="gu">---</span>
+
+<span class="gh"># 角色</span>
+
+你是一位资深的学术论文校对编辑，拥有丰富的社会科学期刊审稿经验。
+你的职责是找出论文中的每一个语言问题。如果你审查后没有发现任何问题，
+说明你审查得不够仔细——请重新检查。
+
+<span class="gh"># 审查维度</span>
+
+<span class="gu">## 语法与拼写</span>
+<span class="k">-</span><span class="w"> </span>主谓一致、时态一致性
+<span class="k">-</span><span class="w"> </span>冠词使用（a/an/the）
+<span class="k">-</span><span class="w"> </span>介词搭配
+<span class="k">-</span><span class="w"> </span>标点符号（特别注意逗号拼接、分号误用）
+
+<span class="gu">## 学术写作规范</span>
+<span class="k">-</span><span class="w"> </span>避免口语化表达（&quot;a lot of&quot; → &quot;substantial&quot;）
+<span class="k">-</span><span class="w"> </span>避免模糊表述（&quot;some researchers&quot; → 具体引用）
+<span class="k">-</span><span class="w"> </span>避免过度使用被动语态
+<span class="k">-</span><span class="w"> </span>段落首句应该概括该段主题
+
+<span class="gu">## 引用一致性</span>
+<span class="k">-</span><span class="w"> </span>文内引用格式是否统一
+<span class="k">-</span><span class="w"> </span>每个事实性陈述是否有引用支撑
+<span class="k">-</span><span class="w"> </span>参考文献列表与文内引用是否一一对应
+
+<span class="gu">## 术语一致性</span>
+<span class="k">-</span><span class="w"> </span>同一概念全文是否使用同一术语
+<span class="k">-</span><span class="w"> </span>缩写首次出现时是否有完整形式
+
+<span class="gh"># 输出格式</span>
+
+按文件位置（行号或段落编号）逐条列出问题，每条包含：
+<span class="k">-</span><span class="w"> </span>📍 位置
+<span class="k">-</span><span class="w"> </span>❌ 原文
+<span class="k">-</span><span class="w"> </span>✅ 建议修改
+<span class="k">-</span><span class="w"> </span>📝 修改理由
+
+最后给出总体评价：语言质量评分（1-10）和最需要关注的前 3 个系统性问题。
+</code></pre></div>
+
+<p><strong>示例 2：领域审查员（domain-reviewer）</strong></p>
+<p>文件路径：<code>.claude/agents/domain-reviewer.md</code></p>
+<div class="highlight"><pre><span></span><code>---
+name: domain-reviewer
+description: &gt;
+  社会科学研究方法和实质内容审查专家。审查理论框架、
+  研究设计、识别策略、统计方法和结果解释。
+model: opus
+tools: Read, Grep, Glob, Bash(grep*), Bash(find*)
+disallowedTools: Write, Edit
+permissionMode: plan
+<span class="gu">maxTurns: 50</span>
+<span class="gu">---</span>
+
+<span class="gh"># 角色</span>
+
+你是一位资深的社会科学研究者，担任顶级期刊的匿名审稿人。
+你的审查应当严格但建设性——指出问题的同时给出改进方向。
+不要对作者客气，但也不要刻薄。
+
+<span class="gh"># 审查框架</span>
+
+<span class="gu">## 1. 理论框架（权重：20%）</span>
+<span class="k">-</span><span class="w"> </span>理论选择是否适合研究问题？
+<span class="k">-</span><span class="w"> </span>核心概念的定义是否清晰？操作化是否合理？
+<span class="k">-</span><span class="w"> </span>理论推导是否有逻辑跳跃？
+<span class="k">-</span><span class="w"> </span>与既有理论的对话是否充分？
+
+<span class="gu">## 2. 研究设计（权重：30%）</span>
+<span class="k">-</span><span class="w"> </span>数据来源是否可靠？样本是否具有代表性？
+<span class="k">-</span><span class="w"> </span>变量测量是否有效度和信度？
+<span class="k">-</span><span class="w"> </span>识别策略是否能支撑因果推断的声称？
+<span class="k">-</span><span class="w"> </span>潜在的威胁：遗漏变量偏误、选择偏误、反向因果、测量误差
+
+<span class="gu">## 3. 统计方法（权重：25%）</span>
+<span class="k">-</span><span class="w"> </span>所用方法是否适合数据结构和研究问题？
+<span class="k">-</span><span class="w"> </span>标准误的计算是否正确（聚类层级是否合理）？
+<span class="k">-</span><span class="w"> </span>稳健性检验是否充分且有说服力？
+<span class="k">-</span><span class="w"> </span>是否存在多重比较问题？
+
+<span class="gu">## 4. 结果解释（权重：15%）</span>
+<span class="k">-</span><span class="w"> </span>对结果的解释是否超出了数据支撑的范围？
+<span class="k">-</span><span class="w"> </span>效应量的实际意义是否讨论了？
+<span class="k">-</span><span class="w"> </span>与既有文献的一致性 / 不一致性是否解释了？
+
+<span class="gu">## 5. 概念测量与计算方法（权重：10%）</span>
+<span class="k">-</span><span class="w"> </span>核心自变量和因变量的测量方式是否合理？
+<span class="k">-</span><span class="w"> </span>量表构建是否有理论依据？
+<span class="k">-</span><span class="w"> </span>指标计算过程是否透明可复制？
+
+<span class="gh"># 输出格式</span>
+
+<span class="gu">## 总体评价</span>
+[2-3 句话概括论文质量和主要判断]
+
+<span class="gu">## 主要优点</span>
+<span class="k">1.</span> ...
+<span class="k">2.</span> ...
+<span class="k">3.</span> ...
+
+<span class="gu">## 主要问题（按严重程度排列）</span>
+<span class="gu">### 问题 1：[标题]</span>
+<span class="k">-</span><span class="w"> </span><span class="gs">**严重程度**</span>: 致命 / 重大 / 一般
+<span class="k">-</span><span class="w"> </span><span class="gs">**具体描述**</span>: ...
+<span class="k">-</span><span class="w"> </span><span class="gs">**改进建议**</span>: ...
+
+<span class="gu">## 小问题与建议</span>
+<span class="k">-</span><span class="w"> </span>...
+
+<span class="gu">## 推荐意见</span>
+[接收 / 大修后重审 / 小修后接收 / 拒稿]，以及理由。
+</code></pre></div>
+
+<blockquote>
+<p>注意这个 Agent 使用了 <code>model: opus</code>——领域审查需要深度推理能力，值得使用更强的模型。而 proofreader 使用 <code>sonnet</code> 就够了，语法校对不需要那么强的推理能力，省钱。</p>
+</blockquote>
+<p><strong>示例 3：R 代码审查员（r-reviewer）</strong></p>
+<p>文件路径：<code>.claude/agents/r-reviewer.md</code></p>
+<div class="highlight"><pre><span></span><code>---
+name: r-reviewer
+description: &gt;
+  R 代码质量和统计正确性审查专家。审查代码风格、
+  统计方法使用、可复现性和潜在错误。
+model: sonnet
+tools: Read, Grep, Glob, Bash(Rscript*), Bash(grep*), Bash(wc*)
+disallowedTools: Write, Edit
+permissionMode: plan
+<span class="gu">maxTurns: 30</span>
+<span class="gu">---</span>
+
+<span class="gh"># 角色</span>
+
+你是一位精通 R 语言的统计方法专家。你的职责是审查 R 脚本的
+代码质量和统计正确性。你对细节极其苛刻——一个错误的标准误
+聚类层级可能导致完全错误的推断。
+
+<span class="gh"># 审查清单</span>
+
+<span class="gu">## 可复现性</span>
+<span class="k">- [ ]</span> 脚本是否设置了随机种子？
+<span class="k">- [ ]</span> 是否使用了相对路径（不能有硬编码的绝对路径）？
+<span class="k">- [ ]</span> 所有使用的包是否在脚本开头加载？
+<span class="k">- [ ]</span> 数据读取路径是否正确？
+
+<span class="gu">## 代码质量</span>
+<span class="k">- [ ]</span> 变量命名是否使用 snake_case？
+<span class="k">- [ ]</span> 是否有未使用的变量或冗余代码？
+<span class="k">- [ ]</span> 管道操作是否清晰可读（单个管道不超过 8 步）？
+<span class="k">- [ ]</span> 关键步骤是否有注释？
+
+<span class="gu">## 统计正确性</span>
+<span class="k">- [ ]</span> 回归模型设定是否合理？
+<span class="k">- [ ]</span> 标准误类型是否正确？聚类层级是否与数据结构匹配？
+<span class="k">- [ ]</span> 固定效应的选择是否有理论依据？
+<span class="k">- [ ]</span> 是否存在完全共线性的变量？
+<span class="k">- [ ]</span> 缺失值处理方式是否合理且透明？
+
+<span class="gu">## 数据处理</span>
+<span class="k">- [ ]</span> 合并操作后是否检查了行数变化？
+<span class="k">- [ ]</span> 变量重编码是否有遗漏类别？
+<span class="k">- [ ]</span> 筛选条件是否正确（特别注意 NA 的处理）？
+<span class="k">- [ ]</span> 是否有可能的数据泄漏（用未来信息预测过去）？
+
+<span class="gh"># 输出格式</span>
+
+按以下结构生成审查报告：
+
+<span class="gs">**代码审查报告: [脚本文件名]**</span>
+
+<span class="gs">**评分: [1-10] / 10**</span>
+
+<span class="gs">**致命问题（必须修复）**</span>
+<span class="k">-</span><span class="w"> </span>...
+
+<span class="gs">**重要问题（强烈建议修复）**</span>
+<span class="k">-</span><span class="w"> </span>...
+
+<span class="gs">**改进建议（可选）**</span>
+<span class="k">-</span><span class="w"> </span>...
+
+<span class="gs">**优点**</span>
+<span class="k">-</span><span class="w"> </span>...
+</code></pre></div>
+
+<h4 id="366-critic-fixer">3.6.6 进阶：对抗式审查模式（Critic-Fixer 循环）</h4>
+<p>前面提到 Sant'Anna 教授工作流中最强大的设计是对抗式审查。其核心思路是：</p>
+<ol>
+<li><strong>Critic（批评者）</strong>：只有读取权限，不能修改文件。它的唯一职责是找问题。因为它无法自己修复，所以没有动机淡化问题的严重性。</li>
+<li><strong>Fixer（修复者）</strong>：有修改权限，负责根据 Critic 的报告修复问题。但它不能自我批准——修复后必须再次提交给 Critic 审查。</li>
+<li><strong>循环</strong>：Critic 审查 → Fixer 修复 → Critic 再审查，最多 5 轮。如果 5 轮后仍有问题，报告给用户人工介入。</li>
+</ol>
+<p>这种设计的效果是：避免了 Claude “对自己的工作说看起来不错”的常见失败模式。你可以在 Skill 中编排这种循环：</p>
+<div class="highlight"><pre><span></span><code><span class="gh"># 在某个 Skill 的流程中</span>
+<span class="gu">## 审查-修复循环</span>
+<span class="k">1.</span> 调用 domain-reviewer Agent 审查论文
+<span class="k">2.</span> 如果发现&quot;致命&quot;或&quot;重大&quot;问题：
+   a. 根据审查报告修复问题
+   b. 再次调用 domain-reviewer 审查修复后的版本
+   c. 重复直到无重大问题，或达到 5 轮上限
+<span class="k">3.</span> 调用 proofreader Agent 审查语言
+<span class="k">4.</span> 汇总所有审查结果
+</code></pre></div>
+
+<p>对于刚起步的研究者，不需要立刻实现完整的 Critic-Fixer 循环。先从手动调用单个 Agent 开始——比如写完一段分析后，手动输入"用 r-reviewer 审查 scripts/regression.R"。等你对 Agent 的审查质量建立了信任，再考虑将其编排进自动化的 Skill 流程中。</p>
+<h4 id="367">3.6.7 使用要点</h4>
+<ul>
+<li><strong>审查员必须是只读的</strong>：通过 <code>disallowedTools: Write, Edit</code> 和 <code>permissionMode: plan</code> 确保审查员只能读取和报告，不能修改文件。这是保证审查独立性的关键设计。</li>
+<li><strong>为不同任务选择不同模型</strong>：语法校对用 <code>sonnet</code>（快且便宜），领域审查用 <code>opus</code>（推理能力强）。不必所有 Agent 都用最贵的模型。</li>
+<li><strong>起步 2-3 个 Agent 就够了</strong>：<code>proofreader</code> + <code>domain-reviewer</code> 是最实用的组合。等你用熟了再添加 <code>r-reviewer</code>、<code>stata-reviewer</code> 等专业审查员。</li>
+<li><strong>持续积累 Gotchas</strong>：每次 Agent 漏掉了一个问题，或者给出了错误的建议，把这个情况添加到 Agent 的指令中。Agent 的质量是在使用中逐步打磨出来的。</li>
+<li><strong>不要过度设计</strong>：Sant'Anna 教授有 10 个 Agent 和 22 个 Skill，但那是经过 6 轮以上迭代的成熟系统。你从 2-3 个 Agent 和 3-5 个 Skill 开始，完全足够。</li>
+</ul>
+<h3 id="37-git-memorymd">3.7 项目管理实践：Git 版本控制与 MEMORY.md</h3>
+<p>前面四层配置体系解决了"怎么让 Claude 好好干活"的问题，但还有两个实际问题没有解决：Claude 改坏了东西怎么办？下次开新会话它又忘了上次犯的错怎么办？这就需要 Git 和 MEMORY.md。</p>
+<h4 id="371-git">3.7.1 为什么需要 Git</h4>
+<p>Claude Code 会直接修改你硬盘上的文件。这意味着它写错了一行代码、删错了一段论文，变更是真实发生的。没有 Git 的话，你可能根本不知道它改了什么，也没有办法回退。</p>
+<p>Git 在这个工作流中承担三个角色：</p>
+<ol>
+<li><strong>安全网</strong>：改坏了可以回退（<code>git checkout</code>），改之前可以对比（<code>git diff</code>）</li>
+<li><strong>审查机制</strong>：每次让 Claude 完成任务后，先看它改了什么再决定是否保留</li>
+<li><strong>历史记录</strong>：记录了项目的每一步变更（what），配合会话日志（why）形成完整的决策链</li>
+</ol>
+<h4 id="372-git">3.7.2 Git 基础操作：从零开始</h4>
+<p>如果你从未用过 Git，以下是完整的操作流程。Git 已经预装在大多数 macOS 系统上；Windows 用户如果按照前文安装了 Git for Windows，也已经可以使用。</p>
+<p><strong>第一步：初始化</strong></p>
+<p>在终端中进入你的项目文件夹，初始化 Git 仓库：</p>
+<p>bash</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>~/Project/my-research-project
+
+<span class="c1"># 初始化 Git 仓库</span>
+git<span class="w"> </span>init
+
+<span class="c1"># 配置你的身份信息（只需做一次）</span>
+git<span class="w"> </span>config<span class="w"> </span>user.name<span class="w"> </span><span class="s2">&quot;你的名字&quot;</span>
+git<span class="w"> </span>config<span class="w"> </span>user.email<span class="w"> </span><span class="s2">&quot;你的邮箱&quot;</span>
+</code></pre></div>
+
+<blockquote>
+<p><code>git init</code> 会在文件夹中创建一个隐藏的 <code>.git/</code> 目录，用于存储所有版本历史。这个目录不要手动修改或删除。</p>
+</blockquote>
+<p><strong>第二步：创建 .gitignore</strong></p>
+<p>在项目根目录创建一个 <code>.gitignore</code> 文件，告诉 Git 哪些文件不需要追踪。以下是一个适合社科研究项目的模板：</p>
+<div class="highlight"><pre><span></span><code># 原始数据（通常太大或有隐私限制，不适合放进 Git）
+data/raw/*.csv
+data/raw/*.dta
+data/raw/*.sav
+data/raw/*.xlsx
+
+# 但保留 raw 目录本身和数据说明文档
+!data/raw/README.md
+!data/raw/codebook/
+
+# 编译产物
+*.aux
+*.log
+*.bbl
+*.blg
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# R 临时文件
+.Rhistory
+.RData
+.Rproj.user/
+
+# Python 临时文件
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# API 密钥和敏感信息
+.env
+*.key
+
+# 大型输出文件（可选，看你是否想追踪图表的版本变更）
+# output/figures/*.pdf
+# output/figures/*.png
+</code></pre></div>
+
+<blockquote>
+<p><strong>提示</strong>：<code>.gitignore</code> 中的 <code>!</code> 前缀表示"例外"——即使上面的规则排除了某个目录的文件，带 <code>!</code> 的文件仍然会被追踪。</p>
+</blockquote>
+<p>你可以用文本编辑器手动创建这个文件，也可以在 Claude Code 中直接说"帮我创建一个适合社科研究项目的 .gitignore"。</p>
+<p><strong>第三步：首次提交</strong></p>
+<p>创建好 <code>.gitignore</code> 后，把项目的初始状态保存为第一个版本：</p>
+<p>bash</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># 查看当前有哪些文件</span>
+git<span class="w"> </span>status
+
+<span class="c1"># 把所有文件加入暂存区</span>
+git<span class="w"> </span>add<span class="w"> </span>-A
+
+<span class="c1"># 创建第一个提交</span>
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;[配置] 初始化项目结构和工作流配置&quot;</span>
+</code></pre></div>
+
+<blockquote>
+<p>三个命令的含义：<code>git status</code> 查看哪些文件发生了变化；<code>git add -A</code> 把所有变化"暂存"起来（相当于"准备提交"）；<code>git commit -m "描述"</code> 正式保存这个版本并附上说明。</p>
+</blockquote>
+<p><strong>第四步：日常工作流</strong></p>
+<p>之后的日常使用中，你和 Claude Code 的协作循环是：</p>
+<div class="highlight"><pre><span></span><code>1. 给 Claude 布置任务
+   → Claude 修改文件
+
+2. 查看 Claude 做了什么
+   git diff                    # 查看具体改了哪些内容
+   git diff --stat             # 查看改了哪些文件（概览）
+
+3. 满意 → 提交
+   git add -A
+   git commit -m &quot;[分析] 添加基准回归模型&quot;
+
+   不满意 → 回退
+   git checkout -- .           # 撤销所有未提交的修改
+   # 或只撤销某个文件：
+   git checkout -- scripts/regression.R
+</code></pre></div>
+
+<p>如果你配置了前面的 <code>/commit</code> Skill，第 3 步可以简化为在 Claude Code 中输入 <code>/commit</code>，它会自动帮你完成 <code>git add</code> → <code>git commit</code> → 可选 <code>git push</code> 的流程。</p>
+<p><strong>什么时候应该 commit？</strong></p>
+<p>新手最常见的困惑是"多久提交一次"。以下是社科研究项目中推荐的提交时机：</p>
+<table>
+<thead>
+<tr>
+<th>时机</th>
+<th>示例</th>
+<th>Commit Message</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>项目初始化完成</td>
+<td>创建目录结构、配置文件</td>
+<td><code>[配置] 初始化项目结构和工作流配置</code></td>
+</tr>
+<tr>
+<td>完成一个数据处理步骤</td>
+<td>清洗完一个数据集</td>
+<td><code>[数据] 清洗 CFPS 2018 家庭共餐变量</code></td>
+</tr>
+<tr>
+<td>完成一个分析任务</td>
+<td>跑完一组回归</td>
+<td><code>[分析] 基准OLS回归和固定效应模型</code></td>
+</tr>
+<tr>
+<td>完成一个写作段落/章节</td>
+<td>写完引言初稿</td>
+<td><code>[论文] 完成引言部分初稿</code></td>
+</tr>
+<tr>
+<td>修复了一个问题</td>
+<td>纠正了标准误的聚类层级</td>
+<td><code>[修复] 标准误改为省级聚类</code></td>
+</tr>
+<tr>
+<td>修改了配置文件</td>
+<td>添加了新的 Rule 或 Skill</td>
+<td><code>[配置] 添加 R 代码规范规则</code></td>
+</tr>
+<tr>
+<td>一天工作结束时</td>
+<td>不管做到哪都先提交</td>
+<td><code>[进度] 4月1日工作存档</code></td>
+</tr>
+</tbody>
+</table>
+<p>核心原则是：<strong>每完成一个你能用一句话描述的独立任务，就提交一次</strong>。宁可多提交，不要攒一大堆变更一次提交——攒得越多，出了问题越难定位是哪一步改坏的。</p>
+<p><strong>不要在以下时候 commit：</strong></p>
+<ul>
+<li>Claude 还在执行任务的中途（等它做完再看结果）</li>
+<li>你还没有用 <code>git diff</code> 检查过变更内容（先审查再提交）</li>
+<li>代码还跑不通或有明显错误（先修好再提交，保持每个版本都是"能用的"）</li>
+</ul>
+<p><strong>常用 Git 命令速查</strong></p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>作用</th>
+<th>什么时候用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>git status</code></td>
+<td>查看当前有哪些变更</td>
+<td>随时</td>
+</tr>
+<tr>
+<td><code>git diff</code></td>
+<td>查看具体改了什么</td>
+<td>Claude 完成任务后、提交前</td>
+</tr>
+<tr>
+<td><code>git add -A</code></td>
+<td>暂存所有变更</td>
+<td>准备提交时</td>
+</tr>
+<tr>
+<td><code>git commit -m "描述"</code></td>
+<td>提交并保存版本</td>
+<td>一个阶段性任务完成时</td>
+</tr>
+<tr>
+<td><code>git log --oneline -10</code></td>
+<td>查看最近 10 次提交记录</td>
+<td>回顾历史</td>
+</tr>
+<tr>
+<td><code>git checkout -- .</code></td>
+<td>撤销所有未提交的修改</td>
+<td>Claude 改坏了想回退</td>
+</tr>
+<tr>
+<td><code>git checkout -- 文件名</code></td>
+<td>撤销某个文件的修改</td>
+<td>只想回退一个文件</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>给完全没用过 Git 的人的建议</strong>：刚开始只需要记住三个命令的循环——<code>git diff</code>（看改了什么）→ <code>git add -A</code>（暂存）→ <code>git commit -m "描述"</code>（提交）。其他命令用到的时候再查。你也可以直接问 Claude Code "帮我看看现在有什么变更"或"帮我提交一下"，它会帮你执行对应的 Git 命令。</p>
+</blockquote>
+<hr />
+<h4 id="373-memorymd">3.7.3 MEMORY.md：跨会话的经验记忆</h4>
+<h5 id="_1">它是什么</h5>
+<p>MEMORY.md 放在项目根目录下，和 CLAUDE.md 同级。Claude Code 启动时会自动读取它。它的作用是记录<strong>教训和修正</strong>——Claude 在这个项目中犯过什么错、你纠正了什么、下次应该怎么做。</p>
+<p>CLAUDE.md 告诉 Claude“你应该怎么做”，MEMORY.md 告诉 Claude"你之前做错了什么，不要再犯"。前者是预设的规则，后者是从实践中积累的经验。</p>
+<h5 id="_2">存放位置</h5>
+<div class="highlight"><pre><span></span><code>my-research-project/
+├── CLAUDE.md              # 项目宪法（预设规则）
+├── MEMORY.md              # 经验记忆（持续积累）
+├── .claude/
+│   └── ...
+└── ...
+</code></pre></div>
+
+<h5 id="memorymd">MEMORY.md 模板</h5>
+<div class="highlight"><pre><span></span><code><span class="gh"># MEMORY.md — 项目经验记录</span>
+
+本文件记录在使用 Claude Code 过程中积累的教训和修正。
+Claude 每次启动时自动读取此文件，避免重复犯错。
+
+<span class="gu">## 数据处理</span>
+<span class="k">-</span><span class="w"> </span>[2026-04-01] CFPS 数据中 income 变量有大量 -8（拒绝回答）和 -1（不适用），
+  不要简单地当作缺失值删除，需要根据研究问题决定处理方式。
+<span class="k">-</span><span class="w"> </span>[2026-04-03] 合并数据时发现 pid 在不同年份的编码规则不同（2010 年是 6 位，
+  2014 年起是 8 位），合并前必须统一格式。
+
+<span class="gu">## 统计分析</span>
+<span class="k">-</span><span class="w"> </span>[2026-04-05] 使用 fixest::feols() 时，聚类标准误的变量必须是 factor 类型，
+  否则结果会默认使用异质性稳健标准误而不报错，容易误判显著性。
+
+<span class="gu">## 论文写作</span>
+<span class="k">-</span><span class="w"> </span>[2026-04-08] 审稿人特别在意&quot;代际关系&quot;和&quot;代际互动&quot;两个概念的区分，
+  全文必须统一使用&quot;代际互动&quot;(intergenerational interaction)。
+
+<span class="gu">## 工具使用</span>
+<span class="k">-</span><span class="w"> </span>[2026-04-10] LaTeX 编译时如果引用了 .bib 中不存在的 key，xelatex 不会报错
+  只会显示 [?]。编译后必须 grep 检查是否存在未解析的引用。
+</code></pre></div>
+
+<h5 id="claude-memorymd">怎么让 Claude 自己写 MEMORY.md</h5>
+<p>有两种方式，建议配合使用：</p>
+<p><strong>方式一：创建一条 Rule 让它自动记录</strong></p>
+<p>文件路径：<code>.claude/rules/memory-management.md</code></p>
+<p>markdown</p>
+<div class="highlight"><pre><span></span><code><span class="gh"># MEMORY.md 维护规则</span>
+
+<span class="gu">## 何时写入</span>
+在以下情况发生时，**立即**将经验追加到项目根目录的 MEMORY.md 中：
+
+<span class="k">1.</span> <span class="gs">**用户纠正了你的错误**</span> — 记录错误内容、正确做法、原因
+<span class="k">2.</span> <span class="gs">**你发现了数据中的陷阱**</span> — 记录数据集名称、变量、具体问题
+<span class="k">3.</span> <span class="gs">**某个操作的结果与预期不同**</span> — 记录操作、预期、实际结果、原因
+<span class="k">4.</span> <span class="gs">**用户提供了领域知识**</span> — 记录知识要点，标注来源
+
+<span class="gu">## 写入格式</span>
+<span class="k">-</span><span class="w"> </span>每条记录以 <span class="sb">`- [YYYY-MM-DD]`</span> 开头
+<span class="k">-</span><span class="w"> </span>放到 MEMORY.md 中对应的分类下（数据处理 / 统计分析 / 论文写作 / 工具使用）
+<span class="k">-</span><span class="w"> </span>如果没有合适的分类，新建一个
+<span class="k">-</span><span class="w"> </span>保持简洁：一条记录不超过 3 行
+
+<span class="gu">## 何时读取</span>
+每次会话开始时自动读取。执行数据分析前，重新检查&quot;数据处理&quot;部分。
+</code></pre></div>
+
+<p>有了这条 Rule，当你在对话中纠正 Claude 时（比如"不对，income 的 -8 不是缺失值"），Claude 会自动把这条教训写入 MEMORY.md。</p>
+<p><strong>方式二：手动提醒</strong></p>
+<p>当 Claude 犯了错而没有自动记录时，直接告诉它：</p>
+<div class="highlight"><pre><span></span><code>&gt; 把这个教训记录到 MEMORY.md
+</code></pre></div>
+
+<p>或者更具体地：</p>
+<div class="highlight"><pre><span></span><code>&gt; 记住：CFPS 数据的 income 变量，-8 表示拒绝回答，不是缺失值。
+&gt; 写到 MEMORY.md 的数据处理部分。
+</code></pre></div>
+
+<h5 id="_3">使用要点</h5>
+<ul>
+<li><strong>MEMORY.md 会越来越长，需要定期整理</strong>：每隔一段时间，审查一下 MEMORY.md，删除已经不再相关的条目（比如某个数据问题已经在 Rules 中固化了），或者将反复出现的教训升级为正式的 Rule。</li>
+<li><strong>MEMORY.md 应该提交到 Git</strong>：它是项目知识的一部分。如果你有合作者，他们也能从这些经验中受益。</li>
+<li><strong>不要和 CLAUDE.md 混淆</strong>：CLAUDE.md 是预设的、相对稳定的规则；MEMORY.md 是动态积累的、不断增长的经验。两者互补，不要把所有东西都塞进一个文件。</li>
+<li><strong>与会话日志（session logs）的区别</strong>：会话日志记录的是"这次会话做了什么决策、为什么"，是过程记录；MEMORY.md 记录的是"从所有会话中提炼出的经验教训"，是结论记录。一个是日记，一个是笔记。</li>
+</ul>
+<h2 id="4">4 完整工作流演示：一个研究项目的全过程（待补充）</h2>
+<blockquote>
+<p><strong>编者注</strong>：本节将以一个真实的社科研究项目为例，从零开始演示完整的 vibe researching 工作流。内容将在作者完成该项目后补充，覆盖从项目初始化到论文产出的全过程。</p>
+</blockquote>
+<p>以下是计划覆盖的阶段：</p>
+<p><strong>阶段一：项目初始化</strong></p>
+<ul>
+<li>创建项目文件夹和目录结构</li>
+<li>编写 CLAUDE.md、配置 Rules / Skills / Agents</li>
+<li><code>git init</code> 和首次提交</li>
+<li>启动 Claude Code，验证配置是否生效</li>
+</ul>
+<p><strong>阶段二：数据准备</strong></p>
+<ul>
+<li>用自然语言指挥 Claude 读取和探索原始数据</li>
+<li>数据清洗和变量构建</li>
+<li>遇到数据问题时 MEMORY.md 的实际记录过程</li>
+<li>阶段性 commit</li>
+</ul>
+<p><strong>阶段三：数据分析</strong></p>
+<ul>
+<li>使用 <code>/data-analysis</code> Skill 执行描述性统计</li>
+<li>回归分析和稳健性检验</li>
+<li>调用 <code>r-reviewer</code> Agent 审查分析脚本</li>
+<li>根据审查报告修复问题</li>
+<li>阶段性 commit</li>
+</ul>
+<p><strong>阶段四：论文写作</strong></p>
+<ul>
+<li>用 Claude Code 搭建论文框架</li>
+<li>逐节撰写和修改</li>
+<li>调用 <code>proofreader</code> Agent 校对语言</li>
+<li>调用 <code>domain-reviewer</code> Agent 审查研究方法</li>
+<li>根据审查意见迭代修改</li>
+<li>阶段性 commit</li>
+</ul>
+<p><strong>阶段五：复盘</strong></p>
+<ul>
+<li>回顾 Git 历史和会话日志</li>
+<li>整理 MEMORY.md 中积累的经验</li>
+<li>将成熟的经验升级为正式 Rules</li>
+<li>总结这套工作流的实际效果和改进空间</li>
+</ul>
+</main>
+
+<script>
+// Scroll progress bar
+window.addEventListener('scroll', () => {
+  const h = document.documentElement;
+  const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+  document.getElementById('progressBar').style.width = pct + '%';
+});
+
+// Active sidebar link tracking
+const links = document.querySelectorAll('.sidebar-nav a');
+const headings = [];
+links.forEach(a => {
+  const id = decodeURIComponent(a.getAttribute('href').slice(1));
+  const el = document.getElementById(id);
+  if (el) headings.push({ el, a });
+});
+
+function updateActive() {
+  let current = headings[0];
+  for (const h of headings) {
+    if (h.el.getBoundingClientRect().top <= 60) current = h;
+  }
+  links.forEach(a => a.classList.remove('active'));
+  if (current) {
+    current.a.classList.add('active');
+    current.a.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  }
+}
+window.addEventListener('scroll', updateActive);
+updateActive();
+
+// Close sidebar on mobile after click
+links.forEach(a => a.addEventListener('click', () => {
+  if (window.innerWidth <= 900) document.querySelector('.sidebar').classList.remove('open');
+}));
+</script>
+
+</body>
+</html>
