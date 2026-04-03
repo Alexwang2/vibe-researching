@@ -427,7 +427,11 @@ hr {
   <a href="#371-git" class="toc-h4">3.7.1 为什么需要 Git</a>
   <a href="#372-git" class="toc-h4">3.7.2 Git 基础操作：从零开始</a>
   <a href="#373-memorymd" class="toc-h4">3.7.3 MEMORY.md：跨会话的经验记忆</a>
-  <a href="#4" class="toc-h2">4 完整工作流演示：一个研究项目的全过程（待补充）</a>
+  <a href="#4" class="toc-h2">4 完整工作流实战：最佳实践总纲与个人实践反思</a>
+  <a href="#41" class="toc-h3">4.1 核心方法论：标准六步任务循环</a>
+  <a href="#42-mvp" class="toc-h3">4.2 最小可行化配置（MVP）：Day 1 必备“三大件”</a>
+  <a href="#43" class="toc-h3">4.3 个人实践反思</a>
+  <a href="#44-token" class="toc-h3">4.4 友情提示：Token 消耗与成本控制预警</a>
 </nav>
 
 
@@ -497,6 +501,12 @@ hr {
 <td>Google</td>
 <td>Gemini</td>
 <td>Google 生态下的对应方案</td>
+</tr>
+<tr>
+<td><strong>Kimi Code CLI</strong></td>
+<td>Moonshot AI</td>
+<td>Kimi</td>
+<td>月之暗面与 Claude Code 的对标产品</td>
 </tr>
 </tbody>
 </table>
@@ -1935,50 +1945,86 @@ Claude 每次启动时自动读取此文件，避免重复犯错。
 <li><strong>不要和 CLAUDE.md 混淆</strong>：CLAUDE.md 是预设的、相对稳定的规则；MEMORY.md 是动态积累的、不断增长的经验。两者互补，不要把所有东西都塞进一个文件。</li>
 <li><strong>与会话日志（session logs）的区别</strong>：会话日志记录的是“这次会话做了什么决策、为什么”，是过程记录；MEMORY.md 记录的是“从所有会话中提炼出的经验教训”，是结论记录。一个是日记，一个是笔记。</li>
 </ul>
-<h2 id="4">4 完整工作流演示：一个研究项目的全过程（待补充）</h2>
+
+<h2 id="4">4 完整工作流实战：最佳实践总纲与个人实践反思</h2>
 <blockquote>
-<p><strong>编者注</strong>：本节将以一个真实的社科研究项目为例，从零开始演示完整的 vibe researching 工作流。内容将在作者完成该项目后补充，覆盖从项目初始化到论文产出的全过程。</p>
+<p><strong>编者注</strong>：在搭建完前文所述的四层配置体系后，很多研究者会兴致勃勃地投入工作，但往往在几天后发现：由于缺乏流程约束，自己又退化回了将 AI 当作“高级 Chatbot”使用的原始状态。本章提炼了在真实研究场景中沉淀的作业标准与反思，旨在帮助你避开基础设施发展不均衡的陷阱，实现研究效能的闭环。</p>
 </blockquote>
-<p>以下是计划覆盖的阶段：</p>
-<p><strong>阶段一：项目初始化</strong></p>
+<p>构建系统是一回事，在系统中高效工作是另一回事。如果建立了文件夹层级后直接盲目开始研究，极易导致“任务产出”挤占“基础设施维护”的时间，最终使系统停滞甚至崩溃。以下原则是保证 vibe researching 能够长效运转的核心方法论。</p>
+
+<h3 id="41">4.1 核心方法论：标准六步任务循环</h3>
+<p>在真正的 Agent 范式下，研究者不应满足于“给个指令，等个结果”。无论是处理简单的数据合并，还是撰写复杂的论文章节，一个完整的任务应当严格遵循以下六步循环：</p>
+<ol>
+<li><strong>PLAN（规划）</strong>：面对非平凡任务（涉及多步骤或复杂逻辑），强制进入规划模式。要求 Claude 草拟计划并保存至 <code>quality_reports/plans/</code>，同时初始化一份会话日志（Session Log）。</li>
+<li><strong>EXECUTE（执行）</strong>：按计划逐步执行。在执行过程中产生的每一个关键决策（例如：为何排除特定样本、为何选择某种权重），都必须同步追加记录到 Session Log 中。</li>
+<li><strong>VERIFY（验证）</strong>：执行完毕不代表任务终结。代码必须确保完整跑通，且需主动调用特定的只读审查员（Agent，如 <code>data-reviewer</code>）进行独立检查。</li>
+<li><strong>DOCUMENT（记录）</strong>：将确认后的结果更新至项目的“单一真相源”（如变量映射表、研究笔记）以及 <code>MEMORY.md</code> 中，并执行 <code>git commit</code> 保存当前版本。</li>
+<li><strong>REFLECT（反思）</strong>：这是最核心的一步。在结束任务前，显式地审视：
+  <ul>
+    <li>刚才的过程中是否有重复性操作？（若有，封装为 <strong>Skill</strong>）</li>
+    <li>是否有需要反复提醒 AI 的隐性规范？（若有，固化为 <strong>Rule</strong>）</li>
+    <li>是否有可以自动化的检查标准？（若有，编写专门的 <strong>Agent</strong>）</li>
+  </ul>
+</li>
+<li><strong>CLOSE（收尾）</strong>：在 Session Log 中注明最终状态和下一次会话的建议起点，确认本轮任务闭环。</li>
+</ol>
+<p><strong>底线原则</strong>：研究流程可因个人习惯调整，但必须显式地设计你的工作流，并将其固化在 <code>.claude/rules/workflow.md</code> 中强制执行。</p>
+
+<h3 id="42-mvp">4.2 最小可行化配置（MVP）：Day 1 必备“三大件”</h3>
+<p>一开始探索时，无需在第一天就设计复杂的审查算法。你只需要建好以下“三大件”，就能让整个系统拥有自驱的“引擎”：</p>
+<ol>
+<li><strong>流程引擎：<code>.claude/rules/workflow.md</code></strong>
+  <ul>
+    <li><strong>作用</strong>：用强制性语气固化上述“六步任务循环”。</li>
+    <li><strong>必要性</strong>：AI 默认倾向于“走捷径”。<code>workflow.md</code> 是给 AI 戴上的紧箍咒，强迫它在执行前必出计划，执行后必做反思。</li>
+    <li><strong>配置</strong>：设置为全局生效（不限定 <code>paths</code>），确保所有操作受此约束。</li>
+  </ul>
+</li>
+<li><strong>安全引擎：<code>.claude/skills/commit/SKILL.md</code></strong>
+  <ul>
+    <li><strong>作用</strong>：封装 Git 提交逻辑，并设置 <code>disable-model-invocation: true</code>。</li>
+    <li><strong>必要性</strong>：防止 AI 误改或误删代码后无法回溯。将 <code>/commit</code> 设置为手动触发，意味着“是否将修改正式并入版本库”的最终决定权永远握在研究者手中。</li>
+  </ul>
+</li>
+<li><strong>增长引擎：项目根目录的 <code>MEMORY.md</code></strong>
+  <ul>
+    <li><strong>作用</strong>：记录教训、数据陷阱与领域知识。</li>
+    <li><strong>必要性</strong>：它是项目知识的“蓄水池”。没有它，AI 对特定数据集或学术规范的纠错会随着会话结束而流失。它确保了系统具备跨会话成长的能力。</li>
+  </ul>
+</li>
+</ol>
+
+<h3 id="43">4.3 个人实践反思</h3>
+<p>在真实的项目迭代中，我总结了以下三点关于基础设施维护的深层反思：</p>
+
+<h4>1. <code>CLAUDE.md</code> 的极速膨胀症</h4>
+<p>在实践初期，研究者最自然的动作是将所有新规、变量名、进度详情全部塞进 <code>CLAUDE.md</code>。然而，当该文件超过 150-200 行时，模型对指令的遵循率会显著下降。</p>
 <ul>
-<li>创建项目文件夹和目录结构</li>
-<li>编写 CLAUDE.md、配置 Rules / Skills / Agents</li>
-<li><code>git init</code> 和首次提交</li>
-<li>启动 Claude Code，验证配置是否生效</li>
-</ul>
-<p><strong>阶段二：数据准备</strong></p>
-<ul>
-<li>用自然语言指挥 Claude 读取和探索原始数据</li>
-<li>数据清洗和变量构建</li>
-<li>遇到数据问题时 MEMORY.md 的实际记录过程</li>
-<li>阶段性 commit</li>
-</ul>
-<p><strong>阶段三：数据分析</strong></p>
-<ul>
-<li>使用 <code>/data-analysis</code> Skill 执行描述性统计</li>
-<li>回归分析和稳健性检验</li>
-<li>调用 <code>r-reviewer</code> Agent 审查分析脚本</li>
-<li>根据审查报告修复问题</li>
-<li>阶段性 commit</li>
-</ul>
-<p><strong>阶段四：论文写作</strong></p>
-<ul>
-<li>用 Claude Code 搭建论文框架</li>
-<li>逐节撰写和修改</li>
-<li>调用 <code>proofreader</code> Agent 校对语言</li>
-<li>调用 <code>domain-reviewer</code> Agent 审查研究方法</li>
-<li>根据审查意见迭代修改</li>
-<li>阶段性 commit</li>
-</ul>
-<p><strong>阶段五：复盘</strong></p>
-<ul>
-<li>回顾 Git 历史和会话日志</li>
-<li>整理 MEMORY.md 中积累的经验</li>
-<li>将成熟的经验升级为正式 Rules</li>
-<li>总结这套工作流的实际效果和改进空间</li>
+  <li><strong>反思</strong>：<code>CLAUDE.md</code> 应仅作为“宪法”。一旦涉及具体的文件规范、代码标准或详细的项目状态，必须果断将其抽离到 <code>rules/</code> 或 <code>Session Logs</code> 中，保持核心指令的高响应度。</li>
 </ul>
 
+<h4>2. 手动提交 memory 会出现的问题</h4>
+<p>需要一开始就区分 <code>auto-memory</code> 和项目根目录的 <code>MEMORY.md</code>。实践中发现，一旦告诉 Agent“记一下你犯的错误”，它有可能会记录到 <code>auto-memory</code>，但 <code>auto-memory</code>不随 Git 提交，且对用户不可见，容易导致协作时的“记忆错位”。</p>
+<ul>
+  <li><strong>反思</strong>：明确分工。系统自动记忆（<code>~/.claude/</code>）仅用于存储个人操作偏好；而关于研究项目的一切事实、教训、纠错，必须记录在项目根目录的 <code>MEMORY.md</code> 中，最好是设置规则进行强制撰写（参考 3.7.3）。只有落盘并受版本控制的记忆，才是真正可靠的学术资产。</li>
+</ul>
+
+<h4>3. 对抗式审查（Critic-Fixer）的引入时机</h4>
+<p>文档虽然介绍了“批评者-修复者”循环，但在项目初期不建议过度设计。</p>
+<ul>
+  <li><strong>反思</strong>：在基础设施搭建阶段，由于缺乏客观的“对错判据”，Agent 审查往往沦为泛泛而谈。对抗循环应在任务具备明确质量标准（如：变量值域必须正确、回归模型必须聚类）时引入。建议采取“先手动调用建立信任，再编排进 Skill 自动化”的渐进路线。</li>
+</ul>
+
+<p><strong>Day 1 理想状态</strong>：你下达任务 → AI 受 <code>workflow.md</code> 约束产出计划并执行 → 你通过 <code>/commit</code> 安全保存 → 纠错经验存入 <code>MEMORY.md</code>。在这个稳固的底座上，复杂的系统会自然“生长”出来。</p>
+
+<h3 id="44-token">4.4 友情提示：Token 消耗与成本控制预警</h3>
+<p>最后需要特别提醒的是：<strong>这套严密的六步任务循环（尤其是频繁的计划草拟、审查调用和日志记录）非常消耗 Token。</strong></p>
+<p>在传统的对话模式下，你发一句模型回一句；而在 Agent 工作流中，为了执行你的一个指令，Claude 可能在后台进行了数次文件检索、计划生成和自我验证，这意味着上下文窗口在快速膨胀。为了避免 API 账单失控或迅速耗尽 Pro 订阅的对话额度，建议在实践中养成以下习惯：</p>
+<ol>
+  <li><strong>模型分级调配</strong>：不要用最贵的模型干所有的活。在你的 Agent 和 Skill 配置中，对于简单的代码验证、拼写检查，指定使用相对便宜且快速的模型（如 <code>sonnet</code> 甚至更低阶的模型）；将推理能力最强、也最耗 Token 的模型（如 <code>opus</code>）严格保留给领域审查（domain-reviewer）和复杂的逻辑推演。</li>
+  <li><strong>及时阻断与重置上下文</strong>：完成一个相对独立的子任务并 <code>commit</code> 后，如果接下来要进行完全不同的工作，建议及时清理当前冗余的对话上下文（使用相应的压缩指令或直接开启新会话）。系统会自动读取最新的 <code>MEMORY.md</code> 和文件状态，让你轻装上阵。</li>
+  <li><strong>拒绝“暴力读取”数据</strong>：绝对不要让 Agent 直接读取体积庞大的原始数据集（如完整的 <code>.csv</code> 或 <code>.dta</code> 文件）。让它通过编写脚本提取前几行（<code>head()</code>）、输出数据结构或生成 <code>summary()</code> 统计特征来进行探查，这也是 <code>.gitignore</code> 必须排除原始数据文件的原因之一。</li>
+</ol>
 </main>
 
 <script>
